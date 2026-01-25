@@ -70,7 +70,7 @@ export function Navbar() {
                 }}
                 transition={{ type: "spring", stiffness: 200, damping: 30 }}
                 className={cn(
-                    "relative flex items-center justify-between w-full h-16 md:h-18 px-4 md:px-8 pointer-events-auto rounded-full transition-all duration-500",
+                    "relative z-50 flex items-center justify-between w-full h-16 md:h-18 px-4 md:px-8 pointer-events-auto rounded-full transition-all duration-500",
                     isScrolled
                         ? "glass-premium shadow-[0_8px_32px_rgba(0,0,0,0.08)] backdrop-blur-2xl border-white/40"
                         : "bg-transparent border-transparent"
@@ -180,7 +180,7 @@ export function Navbar() {
                     <button
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                         className={cn(
-                            "p-2.5 rounded-xl transition-all md:hidden",
+                            "p-2.5 rounded-xl transition-all md:hidden relative z-50",
                             isScrolled ? "bg-slate-100 text-slate-950" : "bg-white/10 text-slate-900 backdrop-blur-md"
                         )}
                     >
@@ -208,7 +208,7 @@ export function Navbar() {
                         initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
                         animate={{ opacity: 1, backdropFilter: "blur(20px)" }}
                         exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
-                        className="fixed inset-0 bg-white/80 z-[45] flex flex-col items-center justify-center space-y-6 md:hidden"
+                        className="fixed inset-0 bg-white/80 z-[45] flex flex-col items-center justify-center space-y-6 md:hidden pointer-events-auto"
                     >
                         {navLinks.map((link, i) => (
                             <motion.div
