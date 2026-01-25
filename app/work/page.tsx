@@ -2,60 +2,31 @@
 
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import { Button } from "@/components/ui/Button";
 import { WorkBackground } from "@/components/work/WorkBackground";
 import { ArrowUpRight, Eye, Layers, Zap } from "lucide-react";
 import Link from "next/link";
 
+import { projects } from "@/app/data/projects";
+
 interface Project {
     id: string;
+    slug: string;
     title: string;
+    subtitle?: string;
     category: string;
+    role?: string;
+    timeline?: string;
     image: string;
     description: string;
-    tags: string[];
+    challenge?: string;
+    solution?: string;
+    impact?: { label: string; value: string }[];
+    stack: string[];
+    gallery?: string[];
     color: string;
 }
-
-const projects = [
-    {
-        id: "01",
-        title: "FinTech Dashboard",
-        category: "System Architecture",
-        image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80",
-        description: "Reimagining institutional finance through a high-performance analytics engine. We focused on data density without cognitive overload.",
-        tags: ["Next.js", "Web3", "D3.js"],
-        color: "#6366f1"
-    },
-    {
-        id: "02",
-        title: "EcoLuxe Interiors",
-        category: "E-Commerce Experience",
-        image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80",
-        description: "A luxury shopping destination where pixels meet physical textures. Integrated 3D product previews and ultra-fast checkout.",
-        tags: ["Shopify", "Three.js", "GSAP"],
-        color: "#06b6d4"
-    },
-    {
-        id: "03",
-        title: "TechFlow Corp",
-        category: "Brand Orchestration",
-        image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80",
-        description: "A complete visual identity overhaul for a global semiconductor leader. Modern, precise, and future-proof.",
-        tags: ["Identity", "Web Design", "Motion"],
-        color: "#8b5cf6"
-    },
-    {
-        id: "04",
-        title: "Urban Bites",
-        category: "Mobile Product",
-        image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&q=80",
-        description: "Designing the fastest way to feed a city. A user-first mobile application focused on micro-interactions and speed.",
-        tags: ["React Native", "UI/UX", "Prototyping"],
-        color: "#3b82f6"
-    }
-];
 
 const CinematicProject = ({ project, index }: { project: Project, index: number }) => {
     const sectionRef = useRef(null);
@@ -148,14 +119,14 @@ const CinematicProject = ({ project, index }: { project: Project, index: number 
                         </p>
 
                         <div className="flex flex-wrap gap-2 mb-10">
-                            {project.tags.map((tag: string) => (
+                            {project.stack.map((tag: string) => (
                                 <span key={tag} className="px-4 py-1.5 rounded-full bg-slate-100 text-slate-500 font-mono text-[10px] tracking-wider uppercase">
                                     {tag}
                                 </span >
                             ))}
                         </div>
 
-                        <Link href="/contact" className="group flex items-center gap-3 w-fit">
+                        <Link href={`/work/${project.slug}`} className="group flex items-center gap-3 w-fit">
                             <div className="w-14 h-14 rounded-full border border-black/10 flex items-center justify-center group-hover:bg-black group-hover:text-white transition-all duration-300">
                                 <ArrowUpRight className="w-6 h-6 rotate-0 group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform" />
                             </div>
