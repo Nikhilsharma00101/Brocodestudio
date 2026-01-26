@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState, useEffect } from "react";
-import { motion, useScroll, useMotionValue, useSpring, useTransform, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useMotionValue, useTransform, AnimatePresence } from "framer-motion";
 import { Users, Target, Lightbulb, Code2, ArrowUpRight, Zap, Shield, Sparkles, Binary, Cpu, Rocket } from "lucide-react";
 import { GlassCard } from "@/components/ui/GlassCard";
 import { AboutHeroBackground } from "@/components/about/AboutHeroBackground";

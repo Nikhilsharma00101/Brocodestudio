@@ -8,25 +8,9 @@ import { WorkBackground } from "@/components/work/WorkBackground";
 import { ArrowUpRight, Eye, Layers, Zap } from "lucide-react";
 import Link from "next/link";
 
-import { projects } from "@/app/data/projects";
+import { projects, Project } from "@/app/data/projects";
 
-interface Project {
-    id: string;
-    slug: string;
-    title: string;
-    subtitle?: string;
-    category: string;
-    role?: string;
-    timeline?: string;
-    image: string;
-    description: string;
-    challenge?: string;
-    solution?: string;
-    impact?: { label: string; value: string }[];
-    stack: string[];
-    gallery?: string[];
-    color: string;
-}
+
 
 const CinematicProject = ({ project, index }: { project: Project, index: number }) => {
     const sectionRef = useRef(null);

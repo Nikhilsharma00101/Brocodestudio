@@ -1,4 +1,23 @@
-export const projects = [
+export interface Project {
+    id: string;
+    slug: string;
+    title: string;
+    subtitle?: string;
+    category: string;
+    role?: string;
+    timeline?: string;
+    image: string;
+    description: string;
+    challenge?: string;
+    solution?: string;
+    impact?: { label: string; value: string }[];
+    stack: string[];
+    gallery?: string[];
+    color: string;
+    liveLink?: string;
+}
+
+export const projects: Project[] = [
     {
         id: "01",
         slug: "fintech-analytics-engine",
@@ -47,7 +66,8 @@ export const projects = [
             "https://images.unsplash.com/photo-1616137466211-f939a420be63?auto=format&fit=crop&q=80",
             "https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&q=80"
         ],
-        color: "#06b6d4"
+        color: "#06b6d4",
+        liveLink: "https://ecoluxe-interior.vercel.app"
     },
     {
         id: "03",

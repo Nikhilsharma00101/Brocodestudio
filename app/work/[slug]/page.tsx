@@ -7,7 +7,7 @@ import { notFound } from "next/navigation";
 import { motion, useScroll, useTransform, useSpring, Variants, useMotionValue } from "framer-motion";
 import { ArrowLeft, ArrowUpRight, Zap, BarChart3 } from "lucide-react";
 import { projects } from "@/app/data/projects";
-import { Button } from "@/components/ui/Button";
+
 
 // Helper to get next project
 const getNextProject = (currentId: string) => {
@@ -189,12 +189,127 @@ export default function ProjectPage({ params }: { params: Promise<{ slug: string
 
                             <div className="hidden md:block w-full h-[1px] bg-gradient-to-r from-white/20 to-transparent mb-12" />
 
-                            <div className="flex gap-4">
-                                {project.stack.slice(0, 3).map((tech, i) => (
-                                    <div key={i} className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[10px] text-white/50 font-mono" title={tech}>
-                                        {tech.substring(0, 2).toUpperCase()}
+                            <div className="flex flex-col gap-8">
+                                <div className="flex gap-4">
+                                    {project.stack.slice(0, 3).map((tech, i) => (
+                                        <div key={i} className="w-12 h-12 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-[10px] text-white/50 font-mono" title={tech}>
+                                            {tech.substring(0, 2).toUpperCase()}
+                                        </div>
+                                    ))}
+                                </div>
+
+                                <div className="flex flex-col gap-8">
+                                    <div className="flex flex-col gap-2">
+                                        <div className="flex items-center justify-between">
+                                            <h4 className="text-[10px] font-mono text-indigo-400 font-bold uppercase tracking-[0.3em]">Deployment Node</h4>
+                                            <div className="flex items-center gap-2">
+                                                <span className="text-[9px] font-mono text-white/30 uppercase tracking-tighter">Secure.0x82</span>
+                                                <div className="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse shadow-[0_0_10px_rgba(99,102,241,1)]" />
+                                            </div>
+                                        </div>
+                                        <div className="h-px w-full bg-gradient-to-r from-indigo-500/50 via-white/10 to-transparent" />
                                     </div>
-                                ))}
+
+                                    {project.liveLink ? (
+                                        <div className="relative">
+                                            {/* Minimalist Professional Link Module */}
+                                            <a
+                                                href={project.liveLink}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="group/deploy block"
+                                            >
+                                                <motion.div
+                                                    whileHover={{ y: -2 }}
+                                                    className="relative p-6 rounded-[2rem] bg-white/5 border border-white/10 hover:border-indigo-500/50 transition-colors duration-500 overflow-hidden"
+                                                >
+                                                    {/* Interactive Background Grid */}
+                                                    <div className="absolute inset-0 opacity-10 group-hover/deploy:opacity-20 transition-opacity">
+                                                        <div className="absolute inset-0" style={{ backgroundImage: 'radial-gradient(circle at 1px 1px, white 1px, transparent 0)', backgroundSize: '16px 16px' }} />
+                                                    </div>
+
+                                                    {/* Shifting Light Refraction */}
+                                                    <motion.div
+                                                        className="absolute inset-x-[-100%] top-0 h-full bg-gradient-to-r from-transparent via-white/5 to-transparent skew-x-[-20deg]"
+                                                        animate={{ x: ["-100%", "200%"] }}
+                                                        transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                                                    />
+
+                                                    <div className="relative z-10">
+                                                        <div className="flex flex-col gap-4">
+                                                            <div className="flex items-center justify-between">
+                                                                <div className="text-[10px] font-mono text-white/40 uppercase tracking-widest">Source Path</div>
+                                                                <span className="text-[10px] font-mono text-indigo-400">ecoluxe.prod_v4</span>
+                                                            </div>
+
+                                                            <div className="py-2">
+                                                                <span className="block text-sm font-mono text-white/60 mb-1">https://</span>
+                                                                <h3 className="text-xl font-bold text-white tracking-tight group-hover/deploy:text-indigo-400 transition-colors">
+                                                                    {project.liveLink.replace('https://', '')}
+                                                                </h3>
+                                                            </div>
+
+                                                            <div className="pt-4 flex items-center justify-between">
+                                                                <div className="flex items-center gap-2">
+                                                                    <span className="text-xs font-bold uppercase tracking-[0.2em] text-white group-hover/deploy:text-indigo-400 transition-colors">View Live Project</span>
+                                                                    <div className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center group-hover/deploy:bg-indigo-600 group-hover/deploy:border-indigo-600 transition-all">
+                                                                        <ArrowUpRight className="w-4 h-4" />
+                                                                    </div>
+                                                                </div>
+
+                                                                {/* Dynamic Visual: Signal Bars */}
+                                                                <div className="flex items-end gap-1 h-4">
+                                                                    {[0.4, 0.7, 0.5, 0.9].map((h, i) => (
+                                                                        <motion.div
+                                                                            key={i}
+                                                                            animate={{ height: [`${h * 100}%`, `${(h * 0.5) * 100}%`, `${h * 100}%`] }}
+                                                                            transition={{ duration: 1 + i * 0.2, repeat: Infinity }}
+                                                                            className="w-1 bg-indigo-500/40 rounded-full"
+                                                                        />
+                                                                    ))}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </motion.div>
+                                            </a>
+
+                                            {/* Subtitle Telemetry */}
+                                            <div className="mt-4 flex items-center justify-between px-2">
+                                                <div className="flex items-center gap-4">
+                                                    <div className="flex flex-col">
+                                                        <span className="text-[8px] font-mono text-white/20 uppercase">Status</span>
+                                                        <span className="text-[9px] font-mono text-green-500">Online</span>
+                                                    </div>
+                                                    <div className="flex flex-col">
+                                                        <span className="text-[8px] font-mono text-white/20 uppercase">Enc</span>
+                                                        <span className="text-[9px] font-mono text-white/60">SSL-AES</span>
+                                                    </div>
+                                                </div>
+                                                <div className="text-[8px] font-mono text-white/20 uppercase">Node_ID: BC-SY-02</div>
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <div className="relative opacity-50 hover:opacity-100 transition-opacity duration-500">
+                                            <div className="p-8 rounded-[2rem] border border-dashed border-white/10 bg-white/5 flex flex-col items-center justify-center gap-6 min-h-[200px]">
+                                                <div className="relative">
+                                                    <div className="absolute inset-0 bg-red-500/20 blur-xl rounded-full animate-pulse" />
+                                                    <Zap className="w-8 h-8 text-white/40 relative z-10" />
+                                                </div>
+
+                                                <div className="text-center">
+                                                    <h3 className="text-sm font-bold text-white tracking-widest uppercase mb-1">Transmission Offline</h3>
+                                                    <span className="text-[10px] font-mono text-white/30 uppercase tracking-[0.2em]">Source Code Archived</span>
+                                                </div>
+
+                                                <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-black/20 border border-white/5">
+                                                    <div className="w-1.5 h-1.5 rounded-full bg-red-500 animate-pulse" />
+                                                    <span className="text-[8px] font-mono text-white/40 uppercase tracking-widest">Signal_Loss_0x99</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -241,11 +356,7 @@ export default function ProjectPage({ params }: { params: Promise<{ slug: string
                                 {project.solution || "Proprietary solution details unavailable."}
                             </p>
 
-                            <div className="mt-12 flex items-center gap-4">
-                                <Button className="bg-indigo-600 hover:bg-indigo-500 text-white rounded-full px-8 py-6">
-                                    View Live Deployment <ArrowUpRight className="ml-2 w-4 h-4" />
-                                </Button>
-                            </div>
+
                         </motion.div>
                     </div>
                 </div>

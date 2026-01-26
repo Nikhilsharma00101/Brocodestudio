@@ -4,9 +4,10 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence, useScroll, useSpring, useMotionValue, useTransform } from "framer-motion";
-import { Menu, X, ArrowRight, Sparkles, Terminal } from "lucide-react";
+import { Menu, X, ArrowRight, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
+import Image from "next/image";
 
 const navLinks = [
     { name: "Home", href: "/" },
@@ -88,8 +89,14 @@ export function Navbar() {
 
                 {/* Logo Section */}
                 <Link href="/" className="flex items-center gap-3 z-50 group select-none cursor-pointer">
-                    <div className="relative flex items-center justify-center w-10 h-10 overflow-hidden rounded-xl bg-slate-950 group-hover:bg-primary transition-colors duration-500">
-                        <Terminal className="w-5 h-5 text-cyan-400 group-hover:text-white transition-colors" />
+                    <div className="relative flex items-center justify-center w-10 h-10 overflow-hidden rounded-xl bg-slate-950 group-hover:bg-slate-900 transition-colors duration-500">
+                        <Image
+                            src="/logo-futuristic.png"
+                            alt="BroCode Logo"
+                            width={32}
+                            height={32}
+                            className="relative z-10 mix-blend-screen"
+                        />
                         <motion.div
                             className="absolute inset-0 bg-gradient-to-tr from-cyan-500/20 to-violet-500/20 opacity-0 group-hover:opacity-100 transition-opacity"
                         />
