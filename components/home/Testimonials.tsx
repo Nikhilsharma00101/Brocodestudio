@@ -15,10 +15,10 @@ const testimonials = [
         color: "cyan"
     },
     {
-        name: "Michael Chen",
-        role: "Founder",
-        company: "NovaBank",
-        content: "Speed, creativity, and technical excellence. The team delivered a complex fintech dashboard that our users absolutely love. Their mastery over real-time data visualization and performant code is simply unmatched.",
+        name: "Marcus Thorne",
+        role: "Director of Digital",
+        company: "Fashion Today",
+        content: "The team at BroCode didn't just build a store; they created a digital runway. Our engagement rates have skyrocketed since the launch of Fashion Today. Their ability to blend high-fashion aesthetics with technical precision is outstanding.",
         rating: 5,
         color: "violet"
     },

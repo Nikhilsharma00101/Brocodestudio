@@ -118,5 +118,47 @@ export const projects: Project[] = [
             "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?auto=format&fit=crop&q=80"
         ],
         color: "#3b82f6"
+    },
+    {
+        id: "05",
+        slug: "fashion-today",
+        title: "Fashion Today",
+        subtitle: "Luxury E-Commerce Platform",
+        category: "E-Commerce Experience",
+        role: "Full Stack Development",
+        timeline: "4 Months",
+        image: "/projects/fashion_today.png",
+        description: "An avant-garde digital boutique designed for high-end fashion, merging immersive cinematic visuals with a high-performance retail engine.",
+        challenge: "The luxury clothing market requires a digital experience that feels as premium as the products themselves. Fashion Today needed a platform that could handle high-resolution visual storytelling while maintaining lightning-fast performance and a conversion-focused checkout flow.",
+        solution: "We built a headless commerce solution using Next.js and a custom-built product engine. The interface features smooth, high-frame-rate transitions and cinematic video backgrounds. We optimized image delivery using a global CDN and implemented a seamless, one-page checkout process that reduced abandonment by 40%.",
+        impact: [
+            { label: "Mobile Engagement", value: "+180%" },
+            { label: "Checkout Speed", value: "2.4s" },
+            { label: "Revenue Growth", value: "65%" }
+        ],
+        stack: ["Next.js", "Tailwind CSS", "Framer Motion", "Headless CMS"],
+        color: "#06b6d4",
+        liveLink: "https://fashion-today-iota.vercel.app"
+    },
+    {
+        id: "06",
+        slug: "fortis-plus",
+        title: "FortisPlus",
+        subtitle: "Advanced Medical Hub",
+        category: "Medical Platform",
+        role: "Lead Developer",
+        timeline: "5 Months",
+        image: "/projects/fortisplus.png",
+        description: "A high-precision medical platform engineered for seamless patient data management and interactive health visualization.",
+        challenge: "Modern healthcare requires a digital bridge between complex medical data and patient-first interfaces. FortisPlus needed to unify disparate medical records into a single, high-security dashboard while providing doctors with intuitive 3D visualization tools for surgery planning.",
+        solution: "We developed a secure, HIPAA-compliant architecture using Next.js and specialized data visualization libraries. The platform features real-time telemetry from medical devices and a custom-built neural rendering engine for MRI/CT scans. We prioritized data density and accessibility, ensuring critical information is never more than two clicks away.",
+        impact: [
+            { label: "Data Accuracy", value: "99.99%" },
+            { label: "Doctor Efficiency", value: "+45%" },
+            { label: "Patient Retention", value: "88%" }
+        ],
+        stack: ["Next.js", "Three.js", "Web3", "Tailwind CSS"],
+        color: "#10b981",
+        liveLink: "https://fortis-plus.vercel.app"
     }
 ];

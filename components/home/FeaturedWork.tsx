@@ -10,13 +10,14 @@ import { Button } from "@/components/ui/Button";
 
 const projects = [
     {
-        title: "NovaBank Nexus",
-        subtitle: "Enterprise Fintech Synthesis",
-        description: "A high-frequency banking terminal engineering real-time global market data into a seamless glassmorphism interface.",
-        image: "/projects/novabank.png",
+        title: "Fashion Today",
+        subtitle: "Luxury E-commerce Platform",
+        description: "An avant-garde digital boutique designed for high-end fashion, merging immersive cinematic visuals with a high-performance retail engine.",
+        image: "/projects/fashion_today.png",
         color: "cyan",
-        tags: ["Real-time Data", "WebSocket", "Fintech"],
-        stats: { loadTime: "0.8s", performance: "99%", status: "Active" }
+        tags: ["E-commerce", "Luxury Retail", "Next.js"],
+        stats: { loadTime: "1.0s", performance: "98%", status: "Live" },
+        liveLink: "https://fashion-today-iota.vercel.app"
     },
     {
         title: "AURA Monochrome",
@@ -133,6 +134,16 @@ function ProjectRow({ project, index }: { project: typeof projects[0]; index: nu
                 )} />
 
                 <div className="relative aspect-[16/10] rounded-[2.5rem] overflow-hidden bg-slate-100 shadow-2xl border border-slate-200">
+                    {project.liveLink && (
+                        <a
+                            href={project.liveLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="absolute inset-0 z-[35] cursor-pointer"
+                            aria-label={`Visit ${project.title} live site`}
+                        />
+                    )}
+
                     <Image
                         src={project.image}
                         alt={project.title}

@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/Button";
 import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { ServicesBackground } from "@/components/services/ServicesBackground";
+import { EcommerceShowcase } from "@/components/services/EcommerceShowcase";
 
 const packages = [
     {
@@ -68,6 +69,14 @@ const packages = [
                 ]
             },
             {
+                title: "AI-Assisted Content & Image Generation",
+                items: [
+                    "Website content written/refined using AI assistance",
+                    "AI-generated industry-relevant images",
+                    "Manual review and final editing included"
+                ]
+            },
+            {
                 title: "Logo Design / Refinement",
                 items: [
                     "Existing logo refinement OR new logo creation",
@@ -94,43 +103,51 @@ const packages = [
         accent: "border-blue-500/50",
         features: [
             {
-                title: "Up to 10-Page Website",
+                title: "Up to 10-Page Advanced Website",
                 items: [
-                    "Custom layout based on business needs",
-                    "Advanced sections and structured content",
-                    "Fully optimized for mobile and desktop"
+                    "Custom high-end layout & UI components",
+                    "Advanced animations & micro-interactions",
+                    "Fully optimized for mobile, tablet & desktop"
                 ]
             },
             {
-                title: "AI-Assisted Content & Image Generation",
+                title: "Premium AI & Content Strategy",
                 items: [
-                    "Website content written/refined using AI assistance",
-                    "AI-generated industry-relevant images",
-                    "Manual review and final editing included"
+                    "Full website copywriting & brand voice setup",
+                    "AI-generated high-definition industry visuals",
+                    "Strategic content structure for conversion"
                 ]
             },
             {
-                title: "Advanced Google Business Profile",
+                title: "Vanguard SEO & Performance",
                 items: [
-                    "Fully optimized profile",
-                    "Business description, services & FAQs added",
-                    "Profile prepared for reviews and local growth"
+                    "Advanced On-page SEO optimization",
+                    "Speed & Core Web Vitals engineering",
+                    "Technical SEO (Sitemaps, Schema Markup)"
                 ]
             },
             {
-                title: "Logo Design (5 Concepts)",
+                title: "Google Business Mastery",
                 items: [
-                    "5 professional logo design options",
-                    "Final logo delivered in PNG/JPG formats"
+                    "Full professional profile optimization",
+                    "Product & Service catalogs setup",
+                    "Strategy for review growth & local ranking"
                 ]
             },
             {
-                title: "Visiting Card Design (Including Content)",
+                title: "Complete Identity Suite",
                 items: [
-                    "Content writing included",
-                    "Front & back design",
-                    "QR code integration",
-                    "Print-ready and digital versions"
+                    "5 Professional Logo concepts & source files",
+                    "Premium Double-sided Visiting Card design",
+
+                ]
+            },
+            {
+                title: "Priority Launch & Support",
+                items: [
+                    "Priority development timeline",
+                    "1 month of technical maintenance",
+                    "3 complete revision cycles"
                 ]
             }
         ],
@@ -226,20 +243,27 @@ function PackageCard({ pkg, index }: { pkg: typeof packages[0]; index: number })
 
     return (
         <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 30, scale: 1 }}
+            whileInView={{
+                opacity: 1,
+                y: 0,
+                scale: pkg.recommended ? 1.05 : 1
+            }}
             viewport={{ once: true }}
-            transition={{ delay: index * 0.1, duration: 0.6 }}
+            transition={{
+                delay: index * 0.1,
+                duration: 0.6,
+                scale: { duration: 0.4, ease: "easeOut" }
+            }}
             style={{
                 rotateX,
                 rotateY,
                 transformStyle: "preserve-3d",
-                willChange: "transform",
             }}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
             onClick={() => router.push("/contact")}
-            className={`group relative h-full perspective-1000 cursor-pointer ${pkg.recommended ? "z-20 scale-102 lg:scale-105" : "z-10"}`}
+            className={`group relative h-full perspective-1000 cursor-pointer ${pkg.recommended ? "z-20" : "z-10"}`}
         >
             {/* Background Glow */}
             <div className={`absolute -inset-6 rounded-[48px] opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-gradient-to-br ${pkg.gradient} blur-[60px] pointer-events-none`} />
@@ -259,13 +283,9 @@ function PackageCard({ pkg, index }: { pkg: typeof packages[0]; index: number })
             )}
 
             <div className={`
-                glass-premium relative h-full flex flex-col p-8 md:p-10 rounded-[40px] overflow-hidden transition-all duration-500
+                glass-premium relative h-full flex flex-col p-8 md:p-10 rounded-[40px] overflow-hidden transition-all duration-500 antialiased
                 ${pkg.recommended ? "border-primary/25 border-glow shadow-[0_20px_50px_rgba(0,0,0,0.1)]" : "border-white/50 hover:border-primary/20 shadow-xl"}
             `}
-                style={{
-                    backfaceVisibility: "hidden",
-                    transform: "translateZ(0)",
-                }}
             >
                 {/* Noise Texture */}
                 <div className="noise-bg absolute inset-0 z-0 pointer-events-none opacity-[0.03]" />
@@ -273,7 +293,7 @@ function PackageCard({ pkg, index }: { pkg: typeof packages[0]; index: number })
                 {/* Refractive Light Streak */}
                 <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-white/10 to-transparent skew-y-[-12deg] -translate-y-full group-hover:translate-y-[200%] transition-transform duration-[1500ms] pointer-events-none" />
 
-                <div className="relative z-10 flex flex-col h-full" style={{ transform: "translateZ(1px)" }}>
+                <div className="relative z-10 flex flex-col h-full">
                     <div className="flex justify-between items-start mb-8">
                         <div className={`p-4 rounded-[20px] bg-gradient-to-br ${pkg.gradient} border border-white/60 shadow-inner group-hover:scale-110 group-hover:rotate-3 transition-transform duration-500`}>
                             <pkg.icon className={`w-7 h-7 ${pkg.name.includes("STARTER") ? "text-cyan-600" : pkg.name.includes("STANDARD") ? "text-violet-600" : "text-blue-600"}`} />
@@ -362,6 +382,8 @@ export default function ServicesPage() {
                         <PackageCard key={pkg.name} pkg={pkg} index={index} />
                     ))}
                 </div>
+
+                <EcommerceShowcase />
 
                 <div className="mt-40 relative">
                     <div className="text-center max-w-2xl mx-auto mb-16 px-4 text-balance">
