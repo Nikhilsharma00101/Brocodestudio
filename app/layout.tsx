@@ -4,6 +4,7 @@
  * Handles global styles, fonts, and shared metadata.
  */
 
+import { Suspense } from "react";
 import type { Metadata, Viewport } from "next";
 import { Inter, Plus_Jakarta_Sans, Outfit, Syne } from "next/font/google"; // Use premium google fonts
 import "./globals.css";
@@ -144,7 +145,9 @@ export default function RootLayout({
           {children}
         </main>
         <Footer />
-        <SmoothScroll />
+        <Suspense fallback={null}>
+          <SmoothScroll />
+        </Suspense>
       </body>
     </html>
   );
