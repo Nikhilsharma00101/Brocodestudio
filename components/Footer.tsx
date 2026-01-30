@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { Instagram, Twitter, Linkedin, Github, ArrowRight, Terminal, Cpu, Database } from "lucide-react";
+import { ArrowRight, Terminal, Cpu, Database } from "lucide-react";
 import { motion, useScroll, useTransform, useMotionValue } from "framer-motion";
 
 const footerLinks = [
@@ -187,6 +187,7 @@ export function Footer() {
                         </motion.div>
 
                         {/* Interactive Social Module */}
+                        {/* Interactive Social Module - HIDDEN FOR NOW
                         <div className="flex flex-wrap items-center gap-10">
                             {[
                                 { icon: <Instagram size={20} />, label: "INSTA" },
@@ -207,6 +208,7 @@ export function Footer() {
                                 </motion.a>
                             ))}
                         </div>
+                        */}
                     </div>
 
                     {/* Links Grid */}

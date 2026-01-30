@@ -20,31 +20,6 @@ export interface Project {
 export const projects: Project[] = [
     {
         id: "01",
-        slug: "fintech-analytics-engine",
-        title: "FinTech Dashboard",
-        subtitle: "Institutional Grade Analytics",
-        category: "System Architecture",
-        role: "Lead Engineering",
-        timeline: "4 Months",
-        image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80",
-        description: "Reimagining institutional finance through a high-performance analytics engine. We focused on data density without cognitive overload.",
-        challenge: "In the high-stakes world of institutional trading, milliseconds matter. The client, a Tier-1 investment firm, struggled with a legacy dashboard that lagged under the weight of real-time global market data. They needed a system that could render millions of data points instantly, provide actionable insights without visual clutter, and maintain 99.999% uptime.",
-        solution: "We engineered a bespoke React-based architecture, utilizing WebGL for high-performance data visualization. By moving heavy computations to a Rust-based backend and using WebSockets for real-time streaming, we achieved a near-zero latency experience. The UI was designed with a 'dark cockpit' aesthetic to reduce eye strain during long trading sessions, focusing on high-contrast data alerts and fluid transitions.",
-        impact: [
-            { label: "Latency Reduction", value: "92%" },
-            { label: "Data Processed", value: "5TB/day" },
-            { label: "User Adoption", value: "100%" }
-        ],
-        stack: ["Next.js", "Web3", "D3.js", "Rust", "Lottie"],
-        gallery: [
-            "https://images.unsplash.com/photo-1642543492481-44e81e3914a7?auto=format&fit=crop&q=80",
-            "https://images.unsplash.com/photo-1611974765270-ca1258634369?auto=format&fit=crop&q=80",
-            "https://images.unsplash.com/photo-1642790106117-e829e14a795f?auto=format&fit=crop&q=80"
-        ],
-        color: "#6366f1"
-    },
-    {
-        id: "02",
         slug: "ecoluxe-interiors",
         title: "EcoLuxe Interiors",
         subtitle: "Sustainable Luxury E-Comm",
@@ -70,57 +45,7 @@ export const projects: Project[] = [
         liveLink: "https://ecoluxe-interior.vercel.app"
     },
     {
-        id: "03",
-        slug: "techflow-identity",
-        title: "TechFlow Corp",
-        subtitle: "Global Brand Evolution",
-        category: "Brand Orchestration",
-        role: "Creative Direction",
-        timeline: "6 Months",
-        image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80",
-        description: "A complete visual identity overhaul for a global semiconductor leader. Modern, precise, and future-proof.",
-        challenge: "TechFlow, a semiconductor giant, was suffering from a 'silent innovator' problem. Their technology was everywhere, but their brand was invisible and outdated. They needed a brand identity that felt as cutting-edge as their 3nm chips—dynamic, precise, and universally adaptable across digital and physical touchpoints.",
-        solution: "We created a 'living identity' system. At the core was a generative logomark that subtly shifted based on real-time data inputs (stock price, global traffic). This was supported by a Swiss-inspired typographic system and a motion language derived from circuit board pathways. The web experience served as a manifesto of their new direction, featuring micro-interactions that mimicked energy flow.",
-        impact: [
-            { label: "Brand Equity", value: "+$40M" },
-            { label: "Talent Influx", value: "+150%" },
-            { label: "Press Mentions", value: "240+" }
-        ],
-        stack: ["Identity", "Web Design", "Motion", "Blender", "Figma"],
-        gallery: [
-            "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&q=80",
-            "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80",
-            "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80"
-        ],
-        color: "#8b5cf6"
-    },
-    {
-        id: "04",
-        slug: "urban-bites-app",
-        title: "Urban Bites",
-        subtitle: "Hyper-Local Food Delivery",
-        category: "Mobile Product",
-        role: "Product Design",
-        timeline: "2 Months",
-        image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&q=80",
-        description: "Designing the fastest way to feed a city. A user-first mobile application focused on micro-interactions and speed.",
-        challenge: "The food delivery market is saturated with cluttered apps that prioritize ads over food. Urban Bites wanted to be the 'anti-app'—a tool so simple and fast that ordering dinner felt like magic. The goal was to reduce the 'time-to-plate' by streamlining the discovery and checkout process.",
-        solution: "We adopted a 'thumb-first' design philosophy. The entire interface is navigable with one hand. We implemented a gesture-based card system for restaurant discovery, similar to dating apps, making the process fun and addictive. The checkout flow was reduced to a single swipe. Visually, we used large, mouth-watering imagery and minimal text to let the food speak for itself.",
-        impact: [
-            { label: "Time-to-Order", value: "45sec" },
-            { label: "App Store Rating", value: "4.9/5" },
-            { label: "Active Users", value: "500k+" }
-        ],
-        stack: ["React Native", "UI/UX", "Prototyping", "Framer", "Firebase"],
-        gallery: [
-            "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&q=80",
-            "https://images.unsplash.com/photo-1540189549336-e6e99c3679fe?auto=format&fit=crop&q=80",
-            "https://images.unsplash.com/photo-1482049016688-2d3e1b311543?auto=format&fit=crop&q=80"
-        ],
-        color: "#3b82f6"
-    },
-    {
-        id: "05",
+        id: "02",
         slug: "fashion-today",
         title: "Fashion Today",
         subtitle: "Luxury E-Commerce Platform",
@@ -141,7 +66,7 @@ export const projects: Project[] = [
         liveLink: "https://fashion-today-iota.vercel.app"
     },
     {
-        id: "06",
+        id: "03",
         slug: "fortis-plus",
         title: "FortisPlus",
         subtitle: "Advanced Medical Hub",
@@ -160,5 +85,26 @@ export const projects: Project[] = [
         stack: ["Next.js", "Three.js", "Web3", "Tailwind CSS"],
         color: "#10b981",
         liveLink: "https://fortis-plus.vercel.app"
+    },
+    {
+        id: "04",
+        slug: "karbhawan",
+        title: "Karbhawan",
+        subtitle: "Aether Luxe Automotive Accessories",
+        category: "E-Commerce & Branding",
+        role: "Full Stack Development",
+        timeline: "4 Months",
+        image: "/projects/karbhawan.png",
+        description: "A premium e-commerce platform for tech-infused automotive accessories, featuring a unique 'doorstep installation' service in Delhi NCR. The design reflects a dark, cinematic, and high-tech aesthetic, merging luxury with functionality.",
+        challenge: "The automotive accessory market is fragmented and often lacks visual appeal. The challenge was to create a platform that felt 'premium' and 'trustworthy' while simplifying the complex logistics of doorstep installation bookings. We needed a system that could handle SKU variants and installation feasibility checks in real-time.",
+        solution: "We built a high-performance Next.js store with a custom booking engine for installation slots. The UI uses a dark, glassmorphism-inspired theme to evoke a 'night drive' feel, matching the products' tech-focused nature. We integrated server-side validation for pricing and installation areas to ensure accuracy.",
+        impact: [
+            { label: "Booking Efficiency", value: "+40%" },
+            { label: "User Engagement", value: "High" },
+            { label: "Return Rate", value: "< 2%" }
+        ],
+        stack: ["Next.js", "Tailwind CSS", "Framer Motion", "React"],
+        color: "#ef4444",
+        liveLink: "https://karbhawancom.vercel.app/"
     }
 ];

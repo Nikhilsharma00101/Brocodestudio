@@ -17,6 +17,101 @@ const navLinks = [
     { name: "Process", href: "/process" },
 ];
 
+const CYCLES = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!@#$%^&*()_+";
+
+const ScrambleLink = ({
+    href,
+    children,
+    isActive,
+    isHovered,
+    onMouseEnter,
+    onMouseLeave
+}: {
+    href: string,
+    children: string,
+    isActive: boolean,
+    isHovered: boolean,
+    onMouseEnter: () => void,
+    onMouseLeave: () => void
+}) => {
+    const [text, setText] = useState(children);
+
+
+    if (!isHovered && text !== children) {
+        setText(children);
+    }
+
+    useEffect(() => {
+        if (!isHovered) {
+            return;
+        }
+
+        let pos = 0;
+        const interval = setInterval(() => {
+            const scrambled = children.split("").map((char, index) => {
+                if (index < pos) return children[index];
+                return CYCLES[Math.floor(Math.random() * CYCLES.length)];
+            }).join("");
+
+            setText(scrambled);
+
+            if (pos >= children.length) {
+                clearInterval(interval);
+            }
+
+            pos += 0.4;
+        }, 40);
+
+        return () => {
+            clearInterval(interval);
+            setText(children);
+        };
+    }, [isHovered, children]);
+
+    return (
+        <Link
+            href={href}
+            onMouseEnter={onMouseEnter}
+            onMouseLeave={onMouseLeave}
+            className={cn(
+                "relative flex items-center justify-center px-6 py-3 text-sm font-bold tracking-wide transition-colors duration-300 overflow-hidden rounded-full font-mono",
+                isActive ? "text-cyan-950" : "text-slate-500 hover:text-cyan-900"
+            )}
+        >
+            {/* Active/Hover Background Pill using LayoutId for smooth sliding */}
+            <AnimatePresence>
+                {/* Active State Background (Permanent) */}
+                {isActive && (
+                    <motion.div
+                        layoutId="nav-active-bg"
+                        className="absolute inset-0 bg-cyan-400 rounded-full shadow-[0_0_20px_rgba(34,211,238,0.4)]"
+                        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                    />
+                )}
+
+                {/* Hover State - Glass Effect (Transient) */}
+                {isHovered && !isActive && (
+                    <motion.div
+                        layoutId="nav-hover-bg"
+                        className="absolute inset-0 bg-slate-200/50 backdrop-blur-sm rounded-full"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                    />
+                )}
+            </AnimatePresence>
+
+            <span className="relative z-10 flex items-center gap-1">
+                {/* Animated Brackets for Active State */}
+                {isActive && <span className="opacity-0 w-0 overflow-hidden animate-in fade-in zoom-in duration-300 md:w-auto md:opacity-100">{`{`}</span>}
+                {text}
+                {isActive && <span className="opacity-0 w-0 overflow-hidden animate-in fade-in zoom-in duration-300 md:w-auto md:opacity-100">{`}`}</span>}
+            </span>
+        </Link>
+    );
+};
+
 export function Navbar() {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -66,7 +161,7 @@ export function Navbar() {
                 initial={false}
                 animate={{
                     width: isScrolled ? "auto" : "100%",
-                    maxWidth: isScrolled ? "900px" : "1400px",
+                    maxWidth: isScrolled ? "950px" : "1400px",
                     y: isScrolled ? 0 : 0,
                 }}
                 transition={{ type: "spring", stiffness: 200, damping: 30 }}
@@ -126,46 +221,19 @@ export function Navbar() {
                 </Link>
 
                 {/* Desktop Navigation - Morphing Background Dock */}
-                <nav className="hidden md:flex items-center gap-1 relative px-1 py-1 rounded-full">
-                    {navLinks.map((link) => {
-                        const isActive = pathname === link.href;
-                        return (
-                            <Link
-                                key={link.name}
-                                href={link.href}
-                                onMouseEnter={() => setHoveredLink(link.name)}
-                                onMouseLeave={() => setHoveredLink(null)}
-                                className={cn(
-                                    "relative px-5 py-2.5 text-sm font-semibold rounded-full transition-colors duration-300",
-                                    isActive ? "text-slate-950" : "text-slate-500 hover:text-slate-900"
-                                )}
-                            >
-                                {/* Hover Background */}
-                                <AnimatePresence>
-                                    {hoveredLink === link.name && (
-                                        <motion.div
-                                            layoutId="navHover"
-                                            className="absolute inset-0 bg-slate-100/80 rounded-full -z-10"
-                                            initial={{ opacity: 0, scale: 0.95 }}
-                                            animate={{ opacity: 1, scale: 1 }}
-                                            exit={{ opacity: 0, scale: 0.95 }}
-                                            transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                                        />
-                                    )}
-                                </AnimatePresence>
-
-                                {/* Active Indicator Dot */}
-                                {isActive && (
-                                    <motion.div
-                                        layoutId="activeIndicator"
-                                        className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-cyan-500 shadow-[0_0_8px_#06b6d4]"
-                                    />
-                                )}
-
-                                <span className="relative z-10">{link.name}</span>
-                            </Link>
-                        );
-                    })}
+                <nav className="hidden md:flex items-center gap-2 relative bg-white/5 backdrop-blur-sm p-1.5 rounded-full border border-white/10 shadow-inner">
+                    {navLinks.map((link) => (
+                        <ScrambleLink
+                            key={link.name}
+                            href={link.href}
+                            isActive={pathname === link.href}
+                            isHovered={hoveredLink === link.name}
+                            onMouseEnter={() => setHoveredLink(link.name)}
+                            onMouseLeave={() => setHoveredLink(null)}
+                        >
+                            {link.name}
+                        </ScrambleLink>
+                    ))}
                 </nav>
 
                 {/* Action Section */}
@@ -208,41 +276,78 @@ export function Navbar() {
                 )}
             </motion.div>
 
-            {/* Mobile Menu Overlay */}
+            {/* Mobile Menu Overlay - "The Digital Curtain" */}
             <AnimatePresence>
                 {isMobileMenuOpen && (
                     <motion.div
-                        initial={{ opacity: 0, backdropFilter: "blur(0px)" }}
-                        animate={{ opacity: 1, backdropFilter: "blur(20px)" }}
-                        exit={{ opacity: 0, backdropFilter: "blur(0px)" }}
-                        className="fixed inset-0 bg-white/80 z-[45] flex flex-col items-center justify-center space-y-6 md:hidden pointer-events-auto"
+                        initial={{ clipPath: "circle(0% at 100% 0%)" }}
+                        animate={{ clipPath: "circle(150% at 100% 0%)" }}
+                        exit={{ clipPath: "circle(0% at 100% 0%)" }}
+                        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                        className="fixed inset-0 bg-slate-950 z-[45] flex flex-col justify-between p-8 md:hidden pointer-events-auto overflow-hidden"
                     >
-                        {navLinks.map((link, i) => (
-                            <motion.div
-                                key={link.name}
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ delay: i * 0.1 }}
-                            >
-                                <Link
-                                    href={link.href}
-                                    onClick={() => setIsMobileMenuOpen(false)}
-                                    className="text-3xl font-bold text-slate-950 hover:text-cyan-500 transition-colors"
+                        {/* Background Grid Decoration */}
+                        <div className="absolute inset-0 z-0 opacity-10"
+                            style={{
+                                backgroundImage: "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
+                                backgroundSize: "40px 40px"
+                            }}
+                        />
+
+                        {/* Top Decoration */}
+                        <div className="relative z-10 flex justify-between items-center opacity-50">
+                            <span className="text-xs font-mono text-cyan-400">{"/// SYSTEM_NAV_V2.0"}</span>
+                            <span className="text-xs font-mono text-cyan-400">SECURE_CONNECTION</span>
+                        </div>
+
+                        {/* Navigation Links */}
+                        <div className="relative z-10 flex flex-col justify-center space-y-2 mt-10">
+                            {navLinks.map((link, i) => (
+                                <motion.div
+                                    key={link.name}
+                                    initial={{ x: -50, opacity: 0 }}
+                                    animate={{ x: 0, opacity: 1 }}
+                                    transition={{ delay: 0.1 + (i * 0.1), duration: 0.5, ease: "easeOut" }}
+                                    className="group"
                                 >
-                                    {link.name}
-                                </Link>
-                            </motion.div>
-                        ))}
+                                    <Link
+                                        href={link.href}
+                                        onClick={() => setIsMobileMenuOpen(false)}
+                                        className="flex items-end gap-4"
+                                    >
+                                        <span className="text-xs font-mono text-cyan-500 mb-2 opacity-50 group-hover:opacity-100 transition-opacity">0{i + 1}</span>
+                                        <span className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-slate-400 to-slate-200 group-hover:from-cyan-400 group-hover:to-violet-500 transition-all duration-300 uppercase tracking-tighter">
+                                            {link.name}
+                                        </span>
+                                    </Link>
+                                    <div className="h-[1px] w-full bg-slate-800 mt-2 group-hover:bg-cyan-500/30 transition-colors duration-500 origin-left scale-x-0 group-hover:scale-x-100" />
+                                </motion.div>
+                            ))}
+                        </div>
+
+                        {/* Bottom Actions */}
                         <motion.div
-                            initial={{ opacity: 0, scale: 0.8 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ delay: 0.5 }}
+                            initial={{ y: 50, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            transition={{ delay: 0.6 }}
+                            className="relative z-10 space-y-6"
                         >
-                            <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)}>
-                                <Button variant="gradient" size="lg" className="rounded-full px-12 h-14 text-lg font-bold">
-                                    Start Project
+                            <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)} className="block">
+                                <Button variant="gradient" size="lg" className="w-full text-lg font-bold py-6 group">
+                                    <span className="mr-2">Initiate Contact</span>
+                                    <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                                 </Button>
                             </Link>
+
+                            <div className="flex justify-between items-end border-t border-slate-800 pt-6">
+                                <div className="flex flex-col text-xs text-slate-500 font-mono">
+                                    <span>BroCode Studio</span>
+                                    <span>© 2026</span>
+                                </div>
+                                <div className="flex gap-4">
+                                    {/* Social Placeholders or other small links could go here */}
+                                </div>
+                            </div>
                         </motion.div>
                     </motion.div>
                 )}

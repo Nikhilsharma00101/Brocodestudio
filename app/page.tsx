@@ -1,4 +1,13 @@
-"use client";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "BroCode Studio | Home",
+  description: "Welcome to BroCode Studio. We build high-performance, premium websites and web applications.",
+  openGraph: {
+    title: "BroCode Studio | Home",
+    description: "Welcome to BroCode Studio. We build high-performance, premium websites and web applications.",
+  }
+};
 
 import Link from "next/link";
 import Image from "next/image";

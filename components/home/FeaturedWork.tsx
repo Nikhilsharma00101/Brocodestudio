@@ -20,28 +20,54 @@ const projects = [
         liveLink: "https://fashion-today-iota.vercel.app"
     },
     {
-        title: "AURA Monochrome",
-        subtitle: "Luxury E-commerce Vision",
-        description: "A minimalist digital boutique pushing the boundaries of spatial layout and cinematic storytelling for ultra-high-end fashion.",
-        image: "/projects/aura.png",
-        color: "violet",
-        tags: ["Spatial UI", "Headless CMS", "Fashion"],
-        stats: { loadTime: "1.2s", performance: "96%", status: "Stable" }
+        title: "Karbhawan",
+        subtitle: "Automotive Tech & Logistics",
+        description: "A premium e-commerce platform for tech-infused automotive accessories, featuring a unique 'doorstep installation' service in Delhi NCR.",
+        image: "/projects/karbhawan.png",
+        color: "cyan", // Kept cyan/violet/emerald theme or I could change. Let's stick to theme colors. Karbhawan is red/dark, but component supports specific colors. Let's try 'violet' or 'cyan' to match theme. Or just 'violet' for contrast. Or 'emerald' if green. The component handles specific colors. Let's use 'violet' for Karbhawan (Premium/Dark).
+        tags: ["Automotive", "Next.js", "Hyper-Local"],
+        stats: { loadTime: "0.8s", performance: "99%", status: "Live" },
+        liveLink: "https://karbhawancom.vercel.app/"
     },
     {
-        title: "NeuraCore AI",
-        subtitle: "Neural Analytics Hub",
-        description: "Advanced AI visualization platform mapping complex neural weights into interactive 3D topological data structures.",
-        image: "/projects/neuracore.png",
-        color: "emerald",
-        tags: ["AI/ML", "Three.js", "Analytics"],
-        stats: { loadTime: "1.5s", performance: "98%", status: "Live" }
+        title: "EcoLuxe Interiors",
+        subtitle: "Sustainable Luxury E-Comm",
+        description: "A luxury shopping destination where pixels meet physical textures. Integrated 3D product previews and ultra-fast checkout.",
+        image: "/projects/ecoluxe.png",
+        color: "emerald", // Matches sustainable
+        tags: ["3D Commerce", "WebGL", "Sustainable"],
+        stats: { loadTime: "0.9s", performance: "100%", status: "Beta" },
+        liveLink: "https://ecoluxe-interior.vercel.app"
     }
 ];
 
+import { useState } from "react";
+import { ExternalLinkModal } from "@/components/ui/ExternalLinkModal";
+
 export function FeaturedWork() {
+    const [modalOpen, setModalOpen] = useState(false);
+    const [targetUrl, setTargetUrl] = useState("");
+
+    const handleProjectClick = (url: string) => {
+        setTargetUrl(url);
+        setModalOpen(true);
+    };
+
+    const confirmNavigation = () => {
+        setModalOpen(false);
+        if (targetUrl) {
+            window.open(targetUrl, "_blank", "noopener,noreferrer");
+        }
+    };
+
     return (
         <section className="relative py-32 overflow-hidden bg-white">
+            <ExternalLinkModal
+                isOpen={modalOpen}
+                onClose={() => setModalOpen(false)}
+                onConfirm={confirmNavigation}
+                url={targetUrl}
+            />
             {/* Background Grid & Decor */}
             <div className="absolute inset-0 z-0 pointer-events-none">
                 <div className="absolute top-0 left-0 w-full h-full opacity-[0.02] dark:opacity-[0.05]"
@@ -96,7 +122,12 @@ export function FeaturedWork() {
                 {/* Staggered Project Listing */}
                 <div className="flex flex-col gap-32">
                     {projects.map((project, index) => (
-                        <ProjectRow key={project.title} project={project} index={index} />
+                        <ProjectRow
+                            key={project.title}
+                            project={project}
+                            index={index}
+                            onProjectClick={handleProjectClick}
+                        />
                     ))}
                 </div>
             </div>
@@ -104,7 +135,7 @@ export function FeaturedWork() {
     );
 }
 
-function ProjectRow({ project, index }: { project: typeof projects[0]; index: number }) {
+function ProjectRow({ project, index, onProjectClick }: { project: typeof projects[0]; index: number; onProjectClick: (url: string) => void }) {
     const rowRef = useRef<HTMLDivElement>(null);
     const { scrollYProgress } = useScroll({
         target: rowRef,
@@ -133,12 +164,10 @@ function ProjectRow({ project, index }: { project: typeof projects[0]; index: nu
                             "bg-emerald-500"
                 )} />
 
-                <div className="relative aspect-[16/10] rounded-[2.5rem] overflow-hidden bg-slate-100 shadow-2xl border border-slate-200">
+                <div className="relative aspect-[16/9] rounded-[2.5rem] overflow-hidden bg-slate-100 shadow-2xl border border-slate-200">
                     {project.liveLink && (
-                        <a
-                            href={project.liveLink}
-                            target="_blank"
-                            rel="noopener noreferrer"
+                        <div
+                            onClick={() => onProjectClick(project.liveLink!)}
                             className="absolute inset-0 z-[35] cursor-pointer"
                             aria-label={`Visit ${project.title} live site`}
                         />
@@ -237,11 +266,14 @@ function ProjectRow({ project, index }: { project: typeof projects[0]; index: nu
                     </div>
 
                     <div className="pt-8 flex items-center gap-6">
-                        <Link href={`/work/${project.title.toLowerCase().replace(' ', '-')}`}>
-                            <Button variant="primary" size="lg" className="h-14 px-8 rounded-2xl font-bold bg-slate-950 text-white hover:bg-slate-800 transition-all shadow-xl shadow-slate-200">
-                                View Synthesis
-                            </Button>
-                        </Link>
+                        <Button
+                            variant="primary"
+                            size="lg"
+                            onClick={project.liveLink ? () => onProjectClick(project.liveLink!) : undefined}
+                            className="h-14 px-8 rounded-2xl font-bold bg-slate-950 text-white hover:bg-slate-800 transition-all shadow-xl shadow-slate-200"
+                        >
+                            View Synthesis
+                        </Button>
                         <div className="flex items-center gap-4 text-slate-400">
                             <Monitor className="w-5 h-5 hover:text-slate-900 transition-colors cursor-pointer" />
                             <Layers className="w-5 h-5 hover:text-slate-900 transition-colors cursor-pointer" />

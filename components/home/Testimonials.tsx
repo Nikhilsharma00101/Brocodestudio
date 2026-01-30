@@ -7,18 +7,18 @@ import { cn } from "@/lib/utils";
 
 const testimonials = [
     {
-        name: "Sarah Jenning",
-        role: "CMO",
-        company: "TechFlow",
-        content: "BroCode transformed our digital presence completely. The attention to detail and premium design quality exceeded our expectations. They didn't just build a site; they engineered a brand experience that truly speaks to our high-end clientele.",
+        name: "Mr. Prince Sharma",
+        role: "General Manager",
+        company: "Karbhawan",
+        content: "BroCode streamlined our complex automotive service operations into a seamless digital platform. The admin panel they developed for managing our extensive daily order volume is incredibly robust and user-friendly. High-performance delivery at its best.",
         rating: 5,
         color: "cyan"
     },
     {
-        name: "Marcus Thorne",
-        role: "Director of Digital",
+        name: "Mr. Ankit Sharma",
+        role: "Owner",
         company: "Fashion Today",
-        content: "The team at BroCode didn't just build a store; they created a digital runway. Our engagement rates have skyrocketed since the launch of Fashion Today. Their ability to blend high-fashion aesthetics with technical precision is outstanding.",
+        content: "We needed an e-commerce experience that matched our fashion brand's identity, and BroCode delivered. The site is visually stunning, and the custom product filtering system has significantly boosted our user engagement and sales.",
         rating: 5,
         color: "violet"
     },
@@ -110,10 +110,10 @@ function TestimonialCard({ t, index }: { t: typeof testimonials[0]; index: numbe
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.15, duration: 0.8 }}
-            className="group relative flex flex-col"
+            className="group relative flex flex-col h-full"
         >
             {/* Card Content Container */}
-            <div className="relative p-10 bg-white border border-slate-100 rounded-[3rem] shadow-[0_10px_40px_-20px_rgba(0,0,0,0.05)] transition-all duration-700 group-hover:shadow-[0_40px_80px_-25px_rgba(0,0,0,0.08)] group-hover:border-slate-200 group-hover:-translate-y-3">
+            <div className="relative p-10 bg-white border border-slate-100 rounded-[3rem] shadow-[0_10px_40px_-20px_rgba(0,0,0,0.05)] transition-all duration-700 group-hover:shadow-[0_40px_80px_-25px_rgba(0,0,0,0.08)] group-hover:border-slate-200 group-hover:-translate-y-3 flex flex-col flex-1 h-full">
                 <div className="absolute top-8 right-10">
                     <Quote className={cn(
                         "w-12 h-12 transition-all duration-700 opacity-10 group-hover:opacity-100 group-hover:-translate-y-2",
@@ -126,16 +126,18 @@ function TestimonialCard({ t, index }: { t: typeof testimonials[0]; index: numbe
                 {/* Star System */}
                 <div className="flex gap-1 mb-8">
                     {[1, 2, 3, 4, 5].map(star => (
-                        <Star key={star} className="w-3.5 h-3.5 fill-slate-900 text-slate-900" />
+                        <Star key={star} className="w-3.5 h-3.5 fill-yellow-500 text-yellow-500" />
                     ))}
                 </div>
 
-                <p className="text-lg md:text-xl text-slate-900 font-medium leading-relaxed italic mb-12">
-                    &quot;{t.content}&quot;
-                </p>
+                <div className="flex-1 mb-12">
+                    <p className="text-lg md:text-xl text-slate-900 font-medium leading-relaxed italic">
+                        &quot;{t.content}&quot;
+                    </p>
+                </div>
 
                 {/* Author Info */}
-                <div className="flex items-center gap-5">
+                <div className="flex items-center gap-5 mt-auto">
                     <div className="relative">
                         <div className={cn(
                             "absolute -inset-1 rounded-2xl blur-lg opacity-0 group-hover:opacity-40 transition-opacity duration-700",
@@ -144,7 +146,11 @@ function TestimonialCard({ t, index }: { t: typeof testimonials[0]; index: numbe
                                     "bg-emerald-500"
                         )} />
                         <div className="relative w-16 h-16 rounded-2xl bg-slate-900 flex items-center justify-center text-xl font-black text-white selection:bg-cyan-500">
-                            {t.name.split(' ').map(n => n[0]).join('')}
+                            {/* Initials Logic */}
+                            {t.name.includes("Mr.")
+                                ? t.name.replace("Mr. ", "").split(' ').map(n => n[0]).join('').substring(0, 2)
+                                : t.name.split(' ').map(n => n[0]).join('').substring(0, 2)
+                            }
                         </div>
                     </div>
                     <div className="flex flex-col">
