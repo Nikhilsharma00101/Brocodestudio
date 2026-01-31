@@ -114,13 +114,9 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
-    apple: "/apple-touch-icon.png", // Ensure existence
-  },
-  manifest: "/site.webmanifest",
 };
+
+
 
 export default function RootLayout({
   children,
