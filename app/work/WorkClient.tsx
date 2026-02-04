@@ -49,6 +49,7 @@ const CinematicProject = ({ project, index }: { project: Project, index: number 
                                 src={project.image}
                                 alt={project.title}
                                 fill
+                                sizes="(max-width: 768px) 100vw, 60vw"
                                 className="object-cover scale-110 group-hover:scale-100 transition-transform duration-1000 ease-out"
                             />
 
@@ -163,27 +164,6 @@ export default function WorkClient() {
                             </h1>
                         </div>
                     </div>
-
-                    <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.5 }}
-                        className="max-w-xl md:ml-auto md:text-right pointer-events-auto"
-                    >
-                        <p className="text-xl md:text-2xl text-slate-500 font-medium leading-relaxed italic">
-                            &quot;Crafting digital legacies where strategy meets high-concept artistry.&quot;
-                        </p>
-                        <div className="mt-8 flex md:justify-end gap-10">
-                            <div className="flex flex-col">
-                                <span className="text-3xl font-bold">12+</span>
-                                <span className="text-[10px] uppercase font-mono tracking-widest text-slate-400">Awards</span>
-                            </div>
-                            <div className="flex flex-col">
-                                <span className="text-3xl font-bold">400%</span>
-                                <span className="text-[10px] uppercase font-mono tracking-widest text-slate-400">Avg Growth</span>
-                            </div>
-                        </div>
-                    </motion.div>
                 </div>
 
                 {/* Vertical Scroll Indicator */}
@@ -217,7 +197,7 @@ export default function WorkClient() {
                             y: [0, -50, 50, 0]
                         }}
                         transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                        className="absolute top-0 left-0 w-[500px] h-[500px] bg-indigo-500/10 blur-[120px] rounded-full"
+                        className="absolute top-0 left-0 w-[500px] h-[500px] bg-[radial-gradient(circle,rgba(99,102,241,0.15)_0%,transparent_70%)] rounded-full will-change-transform"
                     />
                 </div>
 

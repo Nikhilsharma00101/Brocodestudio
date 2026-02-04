@@ -75,7 +75,7 @@ export function EcommerceShowcase() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.8 }}
-                className="max-w-7xl mx-auto px-4 relative z-10"
+                className="max-w-7xl mx-auto px-4 relative z-10 will-change-transform"
             >
                 <div className="glass-premium relative overflow-hidden rounded-[50px] border-primary/5 shadow-2xl">
                     {/* Inner Glass Glow */}
@@ -121,8 +121,12 @@ export function EcommerceShowcase() {
                                     <div className="space-y-1">
                                         <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground block">Complete Project Package</span>
                                         <div className="flex items-baseline gap-2">
-                                            <span className="text-5xl md:text-6xl font-black tracking-tighter text-primary">₹45,000</span>
+                                            <span className="text-5xl md:text-6xl font-black tracking-tighter text-primary">₹59,999</span>
                                             <span className="text-primary/40 font-bold text-xl">*</span>
+                                        </div>
+                                        <div className="flex items-center gap-2 mt-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 w-fit">
+                                            <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+                                            <span className="text-[10px] font-bold text-emerald-700 uppercase tracking-wider">Includes All Premium Services</span>
                                         </div>
                                     </div>
 

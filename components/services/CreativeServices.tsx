@@ -130,6 +130,7 @@ function Card({ item, index, router }: { item: typeof services[0], index: number
                 group cursor-pointer relative p-1 rounded-[40px]
                 ${item.colSpan}
                 min-h-[300px] flex flex-col justify-between
+                will-change-transform
             `}
         >
             {/* Morphing Border Gradient */}

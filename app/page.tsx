@@ -14,13 +14,15 @@ import Image from "next/image";
 import { CheckCircle2 } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 
+import dynamic from "next/dynamic";
 import { Hero } from "@/components/home/Hero";
-import { FeaturedWork } from "@/components/home/FeaturedWork";
-import { ProcessTimeline } from "@/components/home/ProcessTimeline";
-import { Testimonials } from "@/components/home/Testimonials";
-import { CTASection } from "@/components/home/CTASection";
 
-import { ServicesOverview } from "@/components/home/ServicesOverview";
+// Lazy load below-the-fold components for faster initial load
+const ServicesOverview = dynamic(() => import("@/components/home/ServicesOverview").then(mod => mod.ServicesOverview));
+const FeaturedWork = dynamic(() => import("@/components/home/FeaturedWork").then(mod => mod.FeaturedWork));
+const ProcessTimeline = dynamic(() => import("@/components/home/ProcessTimeline").then(mod => mod.ProcessTimeline));
+const Testimonials = dynamic(() => import("@/components/home/Testimonials").then(mod => mod.Testimonials));
+const CTASection = dynamic(() => import("@/components/home/CTASection").then(mod => mod.CTASection));
 
 export default function Home() {
   return (

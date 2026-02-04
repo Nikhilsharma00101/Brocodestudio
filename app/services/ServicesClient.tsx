@@ -2,43 +2,56 @@
 
 import { Check, Rocket, Shield, Zap, Sparkles, MoveRight } from "lucide-react";
 import { Button } from "@/components/ui/Button";
-import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
+import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { ServicesBackground } from "@/components/services/ServicesBackground";
-import { EcommerceShowcase } from "@/components/services/EcommerceShowcase";
-import { CreativeServices } from "@/components/services/CreativeServices";
+import dynamic from "next/dynamic";
+
+// Lazy load heavy components to reduce initial bundle size
+const EcommerceShowcase = dynamic(() => import("@/components/services/EcommerceShowcase").then(mod => mod.EcommerceShowcase), {
+    loading: () => <div className="h-[500px] w-full animate-pulse bg-gray-50/50 rounded-3xl mt-40" />
+});
+
+const CreativeServices = dynamic(() => import("@/components/services/CreativeServices").then(mod => mod.CreativeServices), {
+    loading: () => <div className="h-[300px] w-full animate-pulse bg-gray-50/50 rounded-3xl my-32" />
+});
 
 const packages = [
     {
-        name: "STARTER PACKAGE",
-        price: "₹9,999",
-        description: "Ideal for new and small businesses starting their online presence.",
+        name: "BASIC PACKAGE",
+        price: "₹16,999",
+        description: "Best for small shops & new businesses starting their online journey.",
         icon: Rocket,
         gradient: "from-cyan-500/20 to-blue-500/20",
         accent: "border-cyan-500/50",
         features: [
             {
-                title: "1-Page Business Website",
+                title: "Starter Website (4-5 Pages)",
                 items: [
-                    "Mobile-friendly landing page",
-                    "Basic sections: About, Services, Contact",
-                    "Call Now & WhatsApp buttons"
+                    "Responsive design (Mobile/Desktop)",
+                    "Contact form + WhatsApp + Maps",
+                    "Basic SEO setup & SSL Security"
                 ]
             },
             {
-                title: "Basic Google Business Profile (GBP)",
+                title: "Essential Branding",
                 items: [
-                    "Google Business Profile setup",
-                    "Correct business category selection",
-                    "Basic business description",
-                    "Address, map pin, contact details"
+                    "Simple Logo (1 concept)",
+                    "Visiting Card (Front design)"
                 ]
             },
             {
-                title: "Basic Logo",
+                title: "Google Presence",
                 items: [
-                    "1 simple professional logo",
-                    "Delivered in PNG/JPG format"
+                    "Basic Google Business Profile setup",
+                    "Correct category & map pin"
+                ]
+            },
+            {
+                title: "Content & Visuals",
+                items: [
+                    "Royalty-free / AI images included",
+                    "Basic homepage content assistance"
                 ]
             }
         ],
@@ -46,50 +59,46 @@ const packages = [
     },
     {
         name: "STANDARD PACKAGE",
-        price: "₹18,999",
-        description: "Best for growing businesses that want better visibility and branding.",
+        price: "₹34,999",
+        description: "For growing clinics & serious local businesses needing a professional kit.",
         icon: Shield,
         gradient: "from-violet-500/20 to-purple-500/20",
         accent: "border-violet-500/50",
         features: [
             {
-                title: "Up to 5-Page Website",
+                title: "Professional Website (6-8 Pages)",
                 items: [
-                    "Home, About, Services, Contact",
-                    "One additional page (FAQ / Gallery / Products / Team / Doctor)",
-                    "Fully responsive on all devices"
+                    "Custom design, Speed optimized, SEO-ready",
+                    "Forms, WhatsApp integration, SSL"
                 ]
             },
             {
-                title: "Optimized Google Business Profile",
+                title: "Complete Branding",
                 items: [
-                    "Keyword-optimized business description",
-                    "Services section fully added",
-                    "Business hours & service areas configured",
-                    "Profile optimized for better local visibility"
+                    "Professional Logo (2 concepts + revisions)",
+                    "Visiting Card (Front & Back)",
+                    "2 Marketing Banner designs"
                 ]
             },
             {
-                title: "AI-Assisted Content & Image Generation",
+                title: "Digital Growth Setup",
                 items: [
-                    "Website content written/refined using AI assistance",
-                    "AI-generated industry-relevant images",
-                    "Manual review and final editing included"
+                    "Optimized Google Business Profile",
+                    "Google Analytics & Search Console"
                 ]
             },
             {
-                title: "Logo Design / Refinement",
+                title: "Social Media Starter",
                 items: [
-                    "Existing logo refinement OR new logo creation",
-                    "2–3 logo concepts provided"
+                    "Profile photo & Cover image",
+                    "2 Professional Post designs"
                 ]
             },
             {
-                title: "Visiting Card Redesign",
+                title: "Business Bonuses",
                 items: [
-                    "Front & back visiting card design",
-                    "QR code (Google Map or Website)",
-                    "Print-ready PDF and digital sharing format"
+                    "Google Review QR Poster",
+                    "Email setup guidance & 1 Month support"
                 ]
             }
         ],
@@ -97,58 +106,48 @@ const packages = [
     },
     {
         name: "PREMIUM PACKAGE",
-        price: "₹29,999",
-        description: "Complete professional branding and online presence for established businesses.",
+        price: "₹52,999",
+        description: "The ultimate brand launch for premium clinics & high-end businesses.",
         icon: Zap,
         gradient: "from-blue-500/20 to-indigo-500/20",
         accent: "border-blue-500/50",
         features: [
             {
-                title: "Up to 10-Page Advanced Website",
+                title: "Premium Website (8-10 Pages)",
                 items: [
-                    "Custom high-end layout & UI components",
-                    "Advanced animations & micro-interactions",
-                    "Fully optimized for mobile, tablet & desktop"
+                    "Advanced UI, Blog, Appointment system",
+                    "Social integrations, Speed & SEO engineered",
+                    "SSL & Enhanced Security"
                 ]
             },
             {
-                title: "Premium AI & Content Strategy",
+                title: "Luxury Branding Suite",
                 items: [
-                    "Full website copywriting & brand voice setup",
-                    "AI-generated high-definition industry visuals",
-                    "Strategic content structure for conversion"
+                    "Premium Logo (3 concepts + revisions)",
+                    "Luxury Visiting Card design",
+                    "3 High-quality Banner designs"
                 ]
             },
             {
-                title: "Vanguard SEO & Performance",
+                title: "Google & Digital Mastery",
                 items: [
-                    "Advanced On-page SEO optimization",
-                    "Speed & Core Web Vitals engineering",
-                    "Technical SEO (Sitemaps, Schema Markup)"
+                    "Fully optimized GBP + Ranking Strategy",
+                    "Analytics, Search Console & Email setup"
                 ]
             },
             {
-                title: "Google Business Mastery",
+                title: "Social Media Kit",
                 items: [
-                    "Full professional profile optimization",
-                    "Product & Service catalogs setup",
-                    "Strategy for review growth & local ranking"
+                    "Profile & Cover image",
+                    "5 Professional Post designs"
                 ]
             },
             {
-                title: "Complete Identity Suite",
+                title: "Premium Bonuses",
                 items: [
-                    "5 Professional Logo concepts & source files",
-                    "Premium Double-sided Visiting Card design",
-                    "3 complete revision cycles"
-                ]
-            },
-            {
-                title: "Priority Launch & Support",
-                items: [
-                    "Priority development timeline",
-                    "1 month of technical maintenance",
-                    "3 complete revision cycles"
+                    "Professional Content Writing (Key pages)",
+                    "High-quality visuals & QR Poster",
+                    "1 Month Priority Support"
                 ]
             }
         ],
@@ -216,32 +215,6 @@ function FeatureItem({ items }: { items: string[] }) {
 
 function PackageCard({ pkg, index }: { pkg: typeof packages[0]; index: number }) {
     const router = useRouter();
-    const x = useMotionValue(0);
-    const y = useMotionValue(0);
-
-    const mouseXSpring = useSpring(x, { stiffness: 150, damping: 20 });
-    const mouseYSpring = useSpring(y, { stiffness: 150, damping: 20 });
-
-    const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["8deg", "-8deg"]);
-    const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-8deg", "8deg"]);
-
-    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-        const rect = e.currentTarget.getBoundingClientRect();
-        const width = rect.width;
-        const height = rect.height;
-        const mouseX = e.clientX - rect.left;
-        const mouseY = e.clientY - rect.top;
-        const xPct = (mouseX / width) - 0.5;
-        const yPct = (mouseY / height) - 0.5;
-        x.set(xPct);
-        y.set(yPct);
-    };
-
-    const handleMouseLeave = () => {
-        x.set(0);
-        y.set(0);
-    };
-
     return (
         <motion.div
             initial={{ opacity: 0, y: 30, scale: 1 }}
@@ -256,18 +229,11 @@ function PackageCard({ pkg, index }: { pkg: typeof packages[0]; index: number })
                 duration: 0.6,
                 scale: { duration: 0.4, ease: "easeOut" }
             }}
-            style={{
-                rotateX,
-                rotateY,
-                transformStyle: "preserve-3d",
-            }}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
             onClick={() => router.push("/contact")}
-            className={`group relative h-full perspective-1000 cursor-pointer ${pkg.recommended ? "z-20" : "z-10"}`}
+            className={`group relative h-full cursor-pointer ${pkg.recommended ? "z-20" : "z-10"}`}
         >
-            {/* Background Glow */}
-            <div className={`absolute -inset-6 rounded-[48px] opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-gradient-to-br ${pkg.gradient} blur-[60px] pointer-events-none`} />
+            {/* Background Glow - Optimized with will-change */}
+            <div className={`absolute -inset-6 rounded-[48px] opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-gradient-to-br ${pkg.gradient} blur-[60px] pointer-events-none will-change-[opacity]`} />
 
             {/* Recommended Tag */}
             {pkg.recommended && (

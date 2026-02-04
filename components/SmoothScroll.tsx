@@ -10,10 +10,18 @@ export default function SmoothScroll() {
     const lenisRef = useRef<Lenis | null>(null);
 
     useEffect(() => {
-        // Initialize Lenis with "high standard" precision settings
+        // Optimization: Detect touch device to disable lenis for native smooth scroll on mobile
+        // This ensures 60fps+ native performance on phones/tablets
+        const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+        if (isTouch) {
+            return;
+        }
+
+        // Initialize Lenis with "high standard" precision settings for Desktop
         const lenis = new Lenis({
-            duration: 1.2, // Slightly tighter response than 1.5
-            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // Exponential ease-out for premium feel
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
             orientation: "vertical",
             gestureOrientation: "vertical",
             smoothWheel: true,
@@ -37,11 +45,15 @@ export default function SmoothScroll() {
 
     // Handle route changes - Scroll to top immediately for SPA feel
     useEffect(() => {
+        // Only run if lenis is active (Desktop)
         if (lenisRef.current) {
-            // If there's a hash in the URL (anchor link), let the browser/Lenis handle it naturally
-            // Otherwise, scroll to top
             if (!window.location.hash) {
                 lenisRef.current.scrollTo(0, { immediate: true });
+            }
+        } else {
+            // Fallback for native scroll (Mobile)
+            if (!window.location.hash) {
+                window.scrollTo(0, 0);
             }
         }
     }, [pathname, searchParams]);

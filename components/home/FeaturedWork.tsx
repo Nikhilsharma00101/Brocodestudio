@@ -177,6 +177,7 @@ function ProjectRow({ project, index, onProjectClick }: { project: typeof projec
                         src={project.image}
                         alt={project.title}
                         fill
+                        sizes="(max-width: 1024px) 100vw, 60vw"
                         className="object-cover transition-transform duration-1000 group-hover:scale-105"
                     />
 

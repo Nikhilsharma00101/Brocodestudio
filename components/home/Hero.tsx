@@ -54,10 +54,12 @@ export function Hero() {
                         y: gridTranslateY,
                         transformOrigin: 'top',
                     }}
+                    // Optimization: Promote to compositor layer
+                    transition={{ type: "tween", ease: "linear", duration: 0 }}
                 />
 
                 {/* HUD Lines */}
-                <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-cyan-500/20 to-transparent" />
+                <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-cyan-500/20 to-transparent will-change-transform" />
                 <div className="absolute top-0 right-1/4 w-px h-full bg-gradient-to-b from-transparent via-violet-500/20 to-transparent" />
                 <div className="absolute left-0 top-1/2 w-full h-px bg-gradient-to-r from-transparent via-slate-500/10 to-transparent" />
 
@@ -73,8 +75,9 @@ export function Hero() {
             </div>
 
             {/* 3. Animated Light Orbs */}
-            <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-[140px] animate-pulse" />
-            <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-violet-500/10 rounded-full blur-[140px] animate-pulse animation-delay-2000" />
+            {/* 3. Animated Light Orbs - Optimized from Blur to Gradient */}
+            <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(6,182,212,0.15)_0%,transparent_70%)] animate-pulse" />
+            <div className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-[radial-gradient(circle,rgba(139,92,246,0.15)_0%,transparent_70%)] animate-pulse animation-delay-2000" />
 
             {/* --- MAIN CONTENT --- */}
             <div className="container relative z-10 px-4 md:px-6">

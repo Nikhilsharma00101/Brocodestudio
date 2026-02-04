@@ -101,7 +101,7 @@ export default function ProjectClient({ project, nextProject }: ProjectClientPro
             <section className="relative h-screen w-full overflow-hidden flex items-end">
                 <motion.div
                     style={{ scale: heroScale, filter: `blur(${heroBlur}px)` }}
-                    className="absolute inset-0 z-0"
+                    className="absolute inset-0 z-0 will-change-[filter,transform]"
                 >
                     <Image
                         src={project.image}
@@ -376,7 +376,7 @@ export default function ProjectClient({ project, nextProject }: ProjectClientPro
                                     whileHover={{ y: -10 }}
                                     className="relative p-10 rounded-3xl bg-[#0f1016] border border-white/5 overflow-hidden group"
                                 >
-                                    <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 rounded-full blur-[50px] group-hover:bg-indigo-500/20 transition-all" />
+                                    <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 rounded-full blur-[50px] group-hover:bg-indigo-500/20 transition-all will-change-[background-color]" />
 
                                     <div className="relative z-10">
                                         <div className="flex items-center gap-2 mb-6 text-slate-500">
@@ -423,6 +423,7 @@ export default function ProjectClient({ project, nextProject }: ProjectClientPro
                                         src={img}
                                         alt="Project visual"
                                         fill
+                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                         className="object-cover group-hover:scale-110 transition-transform duration-1000"
                                     />
                                     <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors" />
@@ -463,7 +464,7 @@ export default function ProjectClient({ project, nextProject }: ProjectClientPro
                                 x: mouseX,
                                 y: mouseY,
                             }}
-                            className="fixed top-0 left-0 w-24 h-24 bg-indigo-600 rounded-full blur-2xl opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity z-20 mix-blend-screen"
+                            className="fixed top-0 left-0 w-24 h-24 bg-indigo-600 rounded-full blur-2xl opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity z-20 mix-blend-screen will-change-transform"
                         />
                     </section>
                 </Link>

@@ -26,7 +26,7 @@ export const projects: Project[] = [
         category: "E-Commerce Experience",
         role: "UX/UI Design & Dev",
         timeline: "3 Months",
-        image: "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80",
+        image: "/projects/ecoluxe.png",
         description: "A luxury shopping destination where pixels meet physical textures. Integrated 3D product previews and ultra-fast checkout.",
         challenge: "Selling high-end, sustainable furniture online poses a unique problem: customers hesitate to buy expensive items they can't touch. EcoLuxe needed a digital experience that could convey the tactile quality of their fabrics and the craftsmanship of their wood, bridging the gap between digital convenience and physical luxury.",
         solution: "We developed an immersive 'tactile web' experience. Using Three.js, we created photorealistic 3D models of key pieces that users could rotate and zoom into 4K texture maps. We coupled this with a headless Shopify setup for blazing fast performance. The design language used organic fluid animations and a soft, earthy color palette to reflect the brand's sustainable ethos.",
