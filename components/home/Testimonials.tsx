@@ -23,10 +23,10 @@ const testimonials = [
         color: "violet"
     },
     {
-        name: "Elena Rodriguez",
-        role: "Director",
-        company: "ArtVibe",
-        content: "A true partner in innovation. They took our rough ideas and turned them into a stunning, functional reality. Their ability to mix luxury aesthetics with solid stability changed the game for our digital strategy.",
+        name: "Dr. Mahesh Mudgil",
+        role: "Founder",
+        company: "Santosh Child Care & Multispeciality Clinic",
+        content: "We got our full business needs done from BroCode for our new clinic, including Website, Banners, Visiting Cards, Flex, Pamphlets, and GBP. They delivered a complete, professional package that perfectly represents our practice.",
         rating: 5,
         color: "emerald"
     }
@@ -147,10 +147,7 @@ function TestimonialCard({ t, index }: { t: typeof testimonials[0]; index: numbe
                         )} />
                         <div className="relative w-16 h-16 rounded-2xl bg-slate-900 flex items-center justify-center text-xl font-black text-white selection:bg-cyan-500">
                             {/* Initials Logic */}
-                            {t.name.includes("Mr.")
-                                ? t.name.replace("Mr. ", "").split(' ').map(n => n[0]).join('').substring(0, 2)
-                                : t.name.split(' ').map(n => n[0]).join('').substring(0, 2)
-                            }
+                            {t.name.replace(/^(Mr\.|Dr\.|Ms\.|Mrs\.)\s*/, "").split(' ').map(n => n[0]).join('').substring(0, 2)}
                         </div>
                     </div>
                     <div className="flex flex-col">

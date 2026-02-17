@@ -1,3 +1,14 @@
+export interface ServiceImages {
+    logo?: string;
+    pamphlet?: string;
+    website?: string;
+    visitingCard?: string;
+    banner?: string;
+    gbp?: string; // Google Business Profile
+    flexBoard?: string;
+    other?: { label: string; image: string }[];
+}
+
 export interface Project {
     id: string;
     slug: string;
@@ -13,6 +24,7 @@ export interface Project {
     impact?: { label: string; value: string }[];
     stack: string[];
     gallery?: string[];
+    serviceImages?: ServiceImages;
     color: string;
     liveLink?: string;
 }
@@ -41,6 +53,11 @@ export const projects: Project[] = [
             "https://images.unsplash.com/photo-1616137466211-f939a420be63?auto=format&fit=crop&q=80",
             "https://images.unsplash.com/photo-1618220179428-22790b461013?auto=format&fit=crop&q=80"
         ],
+        serviceImages: {
+            website: "/projects/ecoluxe.png", // Using main image as placeholder for now
+            logo: "/projects/ecoluxe/logo.png",
+
+        },
         color: "#06b6d4",
         liveLink: "https://ecoluxe-interior.vercel.app"
     },
@@ -52,7 +69,7 @@ export const projects: Project[] = [
         category: "E-Commerce Experience",
         role: "Full Stack Development",
         timeline: "4 Months",
-        image: "/projects/fashion_today.png",
+        image: "/projects/fashion-today/fashion_today.png",
         description: "An avant-garde digital boutique designed for high-end fashion, merging immersive cinematic visuals with a high-performance retail engine.",
         challenge: "The luxury clothing market requires a digital experience that feels as premium as the products themselves. Fashion Today needed a platform that could handle high-resolution visual storytelling while maintaining lightning-fast performance and a conversion-focused checkout flow.",
         solution: "We built a headless commerce solution using Next.js and a custom-built product engine. The interface features smooth, high-frame-rate transitions and cinematic video backgrounds. We optimized image delivery using a global CDN and implemented a seamless, one-page checkout process that reduced abandonment by 40%.",
@@ -62,6 +79,14 @@ export const projects: Project[] = [
             { label: "Revenue Growth", value: "65%" }
         ],
         stack: ["Next.js", "Tailwind CSS", "Framer Motion", "Headless CMS"],
+        serviceImages: {
+            website: "/projects/fashion-today/fashion_today.png",
+            visitingCard: "/projects/fashion-today/visiting-card-v2.png",
+            banner: "/projects/fashion-today/banner-v2.png",
+            flexBoard: "/projects/fashion-today/flex-v2.png",
+            pamphlet: "/projects/fashion-today/pamphlet-v2.png",
+            logo: "/projects/fashion-today/logo.png"
+        },
         color: "#06b6d4",
         liveLink: "https://fashion-today-iota.vercel.app"
     },
@@ -83,6 +108,12 @@ export const projects: Project[] = [
             { label: "Patient Retention", value: "88%" }
         ],
         stack: ["Next.js", "Three.js", "Web3", "Tailwind CSS"],
+        serviceImages: {
+            website: "/projects/fortisplus.png",
+            gbp: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&q=80",
+            other: [{ label: "Brochure Design", image: "https://images.unsplash.com/photo-1596524430615-b46475ddff6e?auto=format&fit=crop&q=80" }],
+            logo: "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&q=80"
+        },
         color: "#10b981",
         liveLink: "https://fortis-plus.vercel.app"
     },
@@ -94,7 +125,7 @@ export const projects: Project[] = [
         category: "E-Commerce & Branding",
         role: "Full Stack Development",
         timeline: "4 Months",
-        image: "/projects/karbhawan.png",
+        image: "/projects/karbhawan/karbhawan.png",
         description: "A premium e-commerce platform for tech-infused automotive accessories, featuring a unique 'doorstep installation' service in Delhi NCR. The design reflects a dark, cinematic, and high-tech aesthetic, merging luxury with functionality.",
         challenge: "The automotive accessory market is fragmented and often lacks visual appeal. The challenge was to create a platform that felt 'premium' and 'trustworthy' while simplifying the complex logistics of doorstep installation bookings. We needed a system that could handle SKU variants and installation feasibility checks in real-time.",
         solution: "We built a high-performance Next.js store with a custom booking engine for installation slots. The UI uses a dark, glassmorphism-inspired theme to evoke a 'night drive' feel, matching the products' tech-focused nature. We integrated server-side validation for pricing and installation areas to ensure accuracy.",
@@ -104,7 +135,43 @@ export const projects: Project[] = [
             { label: "Return Rate", value: "< 2%" }
         ],
         stack: ["Next.js", "Tailwind CSS", "Framer Motion", "React"],
+        serviceImages: {
+            website: "/projects/karbhawan/karbhawan.png",
+            visitingCard: "/projects/karbhawan/visiting-card.png",
+            banner: "/projects/karbhawan/flex.png",
+            flexBoard: "/projects/karbhawan/banner.png",
+            pamphlet: "/projects/karbhawan/pamphlet.png",
+            logo: "/projects/karbhawan/logo.png"
+        },
         color: "#ef4444",
         liveLink: "https://karbhawancom.vercel.app/"
+    },
+    {
+        id: "05",
+        slug: "santosh-clinic",
+        title: "Santosh Child Care",
+        subtitle: "Premium Medical Multispeciality",
+        category: "Healthcare & Booking System",
+        role: "Full Stack & UI/UX",
+        timeline: "2 Months",
+        image: "/projects/santosh-clinic/thumbnail.png",
+        description: "A high-end, digital twin for a leading multispeciality clinic. We crafted a reassuring, professional digital presence that simplifies the patient journey from discovery to recovery.",
+        challenge: "Medical websites often feel sterile and confusing. The challenge was to balance 'clinical trust' with 'warmth and care', while integrating a complex multi-channel booking system (Web + WhatsApp) for different departments.",
+        solution: "We designed a 'Glass & Grace' aesthetic—using soft, calming gradients and glassmorphism to create a clean, modern feel. The platform features a custom-built appointment engine that syncs with the clinic's reception, and a one-click WhatsApp consultant for immediate inquiries. The 'Know Your Doctor' section uses high-fidelity profiles to build trust before the first visit.",
+        impact: [
+            { label: "Appointments", value: "+150%" },
+            { label: "Patient Trust", value: "High" },
+            { label: "Wait Time", value: "-30%" }
+        ],
+        stack: ["Next.js", "Framer Motion", "Twilio API", "Tailwind"],
+        serviceImages: {
+            website: "/projects/santosh-clinic/thumbnail.png",
+            visitingCard: "/projects/santosh-clinic/visiting-card.svg",
+            banner: "/projects/santosh-clinic/banner.svg",
+            gbp: "/projects/santosh-clinic/GBP.png",
+            flexBoard: "/projects/santosh-clinic/flex.svg"
+        },
+        color: "#0ea5e9", // Sky blue for trust/medical
+        liveLink: "https://santosh-clinic.vercel.app"
     }
 ];

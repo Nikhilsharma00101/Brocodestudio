@@ -2,9 +2,9 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useScroll, useTransform, useSpring, Variants, useMotionValue } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring, Variants, useMotionValue, AnimatePresence } from "framer-motion";
 import { ArrowLeft, ArrowUpRight, Zap, BarChart3 } from "lucide-react";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import { Project } from "@/app/data/projects";
 
 // Animation Variants
@@ -35,6 +35,7 @@ interface ProjectClientProps {
 }
 
 export default function ProjectClient({ project, nextProject }: ProjectClientProps) {
+    const [selectedImage, setSelectedImage] = useState<string | null>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const { scrollYProgress } = useScroll({
         target: containerRef,
@@ -394,6 +395,147 @@ export default function ProjectClient({ project, nextProject }: ProjectClientPro
                 </section>
             )}
 
+            {/* Service Deliverables Gallery - Cohesive Masonry Layout */}
+            {project.serviceImages && (
+                <section className="py-32 px-6 bg-[#0b0c10] relative">
+                    <div className="container mx-auto max-w-[1800px]">
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.8 }}
+                            className="flex flex-col items-start mb-16"
+                        >
+                            <span className="text-indigo-500 font-mono text-xs uppercase tracking-[0.5em] block mb-4">Complete Ecosystem</span>
+                            <h2 className="text-5xl md:text-7xl font-black text-white leading-none mb-6">
+                                BRAND<br />ARCHITECT
+                            </h2>
+                            <p className="text-slate-400 max-w-xl text-lg leading-relaxed">
+                                A unified visual language across every physical and digital touchpoint.
+                            </p>
+                        </motion.div>
+
+                        <div className="flex flex-col gap-6">
+                            {/* 1. Main Website Showcase (Full Width) */}
+                            {project.serviceImages.website && (
+                                <motion.div
+                                    initial={{ opacity: 0, scale: 0.98 }}
+                                    whileInView={{ opacity: 1, scale: 1 }}
+                                    transition={{ duration: 0.8 }}
+                                    className="relative w-full aspect-[21/9] bg-[#111218] rounded-[2rem] overflow-hidden border border-white/10 group cursor-zoom-in"
+                                    onClick={() => setSelectedImage(project.serviceImages?.website || null)}
+                                >
+                                    <Image
+                                        src={project.serviceImages.website}
+                                        alt="Website Design"
+                                        fill
+                                        className="object-cover transition-transform duration-1000 group-hover:scale-105"
+                                    />
+                                    {/* Minimal Gradient Overlay for Text Visibility Only */}
+                                    <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-8">
+                                        <h3 className="text-2xl font-bold text-white">Core Digital Platform</h3>
+                                    </div>
+                                </motion.div>
+                            )}
+
+                            {/* 2. Secondary Assets Grid (Responsive) */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                {/* Col 1: Banner (Vertical) */}
+                                {project.serviceImages.banner && (
+                                    <div
+                                        className="relative aspect-[2/3] bg-[#111218] rounded-[2rem] overflow-hidden border border-white/10 group cursor-zoom-in"
+                                        onClick={() => setSelectedImage(project.serviceImages?.banner || null)}
+                                    >
+                                        <Image
+                                            src={project.serviceImages.banner}
+                                            alt="Banner Design"
+                                            fill
+                                            className="object-cover transition-transform duration-1000 group-hover:scale-105"
+                                        />
+                                        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                                            <span className="text-sm font-bold text-white uppercase tracking-widest">Banner Design</span>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* Col 2: Flex Board (Vertical) */}
+                                {project.serviceImages.flexBoard && (
+                                    <div
+                                        className="relative aspect-[2/3] bg-[#111218] rounded-[2rem] overflow-hidden border border-white/10 group cursor-zoom-in"
+                                        onClick={() => setSelectedImage(project.serviceImages?.flexBoard || null)}
+                                    >
+                                        <Image
+                                            src={project.serviceImages.flexBoard}
+                                            alt="Flex Board"
+                                            fill
+                                            className="object-cover transition-transform duration-1000 group-hover:scale-105"
+                                        />
+                                        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                                            <span className="text-sm font-bold text-white uppercase tracking-widest">Flex Board</span>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* Col 3: Pamphlet (Vertical) */}
+                                {project.serviceImages.pamphlet && (
+                                    <div
+                                        className="relative aspect-[2/3] bg-[#111218] rounded-[2rem] overflow-hidden border border-white/10 group cursor-zoom-in"
+                                        onClick={() => setSelectedImage(project.serviceImages?.pamphlet || null)}
+                                    >
+                                        <Image
+                                            src={project.serviceImages.pamphlet}
+                                            alt="Pamphlet Design"
+                                            fill
+                                            className="object-cover transition-transform duration-1000 group-hover:scale-105"
+                                        />
+                                        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                                            <span className="text-sm font-bold text-white uppercase tracking-widest">Pamphlet Design</span>
+                                        </div>
+                                    </div>
+                                )}
+
+                                {/* Col 4: Stacked Landscapes (Visiting Card + GBP) */}
+                                {(project.serviceImages.visitingCard || project.serviceImages.gbp) && (
+                                    <div className="flex flex-col gap-6 h-full">
+                                        {project.serviceImages.visitingCard && (
+                                            <div
+                                                className="relative flex-1 bg-[#111218] rounded-[2rem] overflow-hidden border border-white/10 group min-h-[200px] cursor-zoom-in"
+                                                onClick={() => setSelectedImage(project.serviceImages?.visitingCard || null)}
+                                            >
+                                                <Image
+                                                    src={project.serviceImages.visitingCard}
+                                                    alt="Visiting Card"
+                                                    fill
+                                                    className="object-cover transition-transform duration-1000 group-hover:scale-105"
+                                                />
+                                                <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                                                    <span className="text-sm font-bold text-white uppercase tracking-widest">Visiting Card</span>
+                                                </div>
+                                            </div>
+                                        )}
+                                        {project.serviceImages.gbp && (
+                                            <div
+                                                className="relative flex-1 bg-[#111218] rounded-[2rem] overflow-hidden border border-white/10 group min-h-[200px] cursor-zoom-in"
+                                                onClick={() => setSelectedImage(project.serviceImages?.gbp || null)}
+                                            >
+                                                <Image
+                                                    src={project.serviceImages.gbp}
+                                                    alt="Google Business Profile"
+                                                    fill
+                                                    className="object-cover transition-transform duration-1000 group-hover:scale-105"
+                                                />
+                                                <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                                                    <span className="text-sm font-bold text-white uppercase tracking-widest">Digital Presence</span>
+                                                </div>
+                                            </div>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            )}
+
             {/* Cinematic Gallery */}
             {project.gallery && (
                 <section className="py-32 px-6 overflow-hidden">
@@ -414,10 +556,11 @@ export default function ProjectClient({ project, nextProject }: ProjectClientPro
                                     className={`relative rounded-2xl overflow-hidden grayscale hover:grayscale-0 transition-all duration-700 ease-out group ${i === 0 ? 'md:col-span-8 md:row-span-2 aspect-[16/9]' :
                                         i === 1 ? 'md:col-span-4 md:row-span-1 aspect-[4/3]' :
                                             'md:col-span-4 md:row-span-1 aspect-[4/3]'
-                                        }`}
+                                        } cursor-zoom-in`}
                                     initial={{ opacity: 0, scale: 0.95 }}
                                     whileInView={{ opacity: 1, scale: 1 }}
                                     transition={{ delay: i * 0.2 }}
+                                    onClick={() => setSelectedImage(img)}
                                 >
                                     <Image
                                         src={img}
@@ -426,7 +569,7 @@ export default function ProjectClient({ project, nextProject }: ProjectClientPro
                                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                         className="object-cover group-hover:scale-110 transition-transform duration-1000"
                                     />
-                                    <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors" />
+                                    <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors pointer-events-none" />
                                 </motion.div>
                             ))}
                         </div>
@@ -469,6 +612,43 @@ export default function ProjectClient({ project, nextProject }: ProjectClientPro
                     </section>
                 </Link>
             )}
+
+            {/* Full Screen Image Modal */}
+            <AnimatePresence>
+                {selectedImage && (
+                    <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        onClick={() => setSelectedImage(null)}
+                        className="fixed inset-0 z-[100] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4 md:p-10 cursor-zoom-out"
+                    >
+                        <motion.div
+                            initial={{ scale: 0.9, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.9, opacity: 0 }}
+                            transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                            className="relative w-full h-full max-w-[1920px] max-h-[1080px] flex items-center justify-center"
+                            onClick={(e) => e.stopPropagation()}
+                        >
+                            <Image
+                                src={selectedImage}
+                                alt="Full screen preview"
+                                fill
+                                className="object-contain"
+                                quality={100}
+                                priority
+                            />
+                            <button
+                                onClick={() => setSelectedImage(null)}
+                                className="absolute top-4 right-4 md:top-8 md:right-8 bg-white/10 hover:bg-white/20 text-white rounded-full p-3 backdrop-blur-lg border border-white/20 transition-all hover:scale-110"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                            </button>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </main>
     );
 }

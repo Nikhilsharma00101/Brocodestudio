@@ -10,10 +10,20 @@ import { Button } from "@/components/ui/Button";
 
 const projects = [
     {
+        title: "Santosh Child Care",
+        subtitle: "Premium Medical Multispeciality",
+        description: "A high-end digital twin for a leading clinic, featuring a custom appointment engine and seamless WhatsApp integration.",
+        image: "/projects/santosh-clinic/thumbnail.png",
+        color: "cyan",
+        tags: ["Healthcare", "Next.js", "Booking System"],
+        stats: { loadTime: "0.5s", performance: "100%", status: "Live" },
+        liveLink: "https://santosh-clinic.vercel.app"
+    },
+    {
         title: "Fashion Today",
         subtitle: "Luxury E-commerce Platform",
         description: "An avant-garde digital boutique designed for high-end fashion, merging immersive cinematic visuals with a high-performance retail engine.",
-        image: "/projects/fashion_today.png",
+        image: "/projects/fashion-today/fashion_today.png",
         color: "cyan",
         tags: ["E-commerce", "Luxury Retail", "Next.js"],
         stats: { loadTime: "1.0s", performance: "98%", status: "Live" },
@@ -23,21 +33,11 @@ const projects = [
         title: "Karbhawan",
         subtitle: "Automotive Tech & Logistics",
         description: "A premium e-commerce platform for tech-infused automotive accessories, featuring a unique 'doorstep installation' service in Delhi NCR.",
-        image: "/projects/karbhawan.png",
+        image: "/projects/karbhawan/karbhawan.png",
         color: "cyan", // Kept cyan/violet/emerald theme or I could change. Let's stick to theme colors. Karbhawan is red/dark, but component supports specific colors. Let's try 'violet' or 'cyan' to match theme. Or just 'violet' for contrast. Or 'emerald' if green. The component handles specific colors. Let's use 'violet' for Karbhawan (Premium/Dark).
         tags: ["Automotive", "Next.js", "Hyper-Local"],
         stats: { loadTime: "0.8s", performance: "99%", status: "Live" },
         liveLink: "https://karbhawancom.vercel.app/"
-    },
-    {
-        title: "EcoLuxe Interiors",
-        subtitle: "Sustainable Luxury E-Comm",
-        description: "A luxury shopping destination where pixels meet physical textures. Integrated 3D product previews and ultra-fast checkout.",
-        image: "/projects/ecoluxe.png",
-        color: "emerald", // Matches sustainable
-        tags: ["3D Commerce", "WebGL", "Sustainable"],
-        stats: { loadTime: "0.9s", performance: "100%", status: "Beta" },
-        liveLink: "https://ecoluxe-interior.vercel.app"
     }
 ];
 

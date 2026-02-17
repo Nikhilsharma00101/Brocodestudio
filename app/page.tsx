@@ -19,6 +19,7 @@ import { Hero } from "@/components/home/Hero";
 
 // Lazy load below-the-fold components for faster initial load
 const ServicesOverview = dynamic(() => import("@/components/home/ServicesOverview").then(mod => mod.ServicesOverview));
+const BusinessPackage = dynamic(() => import("@/components/home/BusinessPackage").then(mod => mod.BusinessPackage));
 const FeaturedWork = dynamic(() => import("@/components/home/FeaturedWork").then(mod => mod.FeaturedWork));
 const ProcessTimeline = dynamic(() => import("@/components/home/ProcessTimeline").then(mod => mod.ProcessTimeline));
 const Testimonials = dynamic(() => import("@/components/home/Testimonials").then(mod => mod.Testimonials));
@@ -29,6 +30,9 @@ export default function Home() {
     <div className="flex flex-col min-h-screen">
       {/* HERO SECTION */}
       <Hero />
+
+      {/* BUSINESS PACKAGE SECTION */}
+      <BusinessPackage />
 
       {/* SERVICES OVERVIEW */}
       <ServicesOverview />
