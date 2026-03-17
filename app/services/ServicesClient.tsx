@@ -16,6 +16,10 @@ const CreativeServices = dynamic(() => import("@/components/services/CreativeSer
     loading: () => <div className="h-[300px] w-full animate-pulse bg-gray-50/50 rounded-3xl my-32" />
 });
 
+const GlobalRoadmap = dynamic(() => import("@/components/services/GlobalRoadmap").then(mod => mod.GlobalRoadmap), {
+    loading: () => <div className="h-[400px] w-full animate-pulse bg-gray-50/50 rounded-3xl my-32" />
+});
+
 const packages = [
     {
         name: "BASIC PACKAGE",
@@ -353,6 +357,8 @@ export default function ServicesClient() {
                 <EcommerceShowcase />
 
                 <CreativeServices />
+
+                <GlobalRoadmap />
 
                 <div className="mt-40 relative">
                     <div className="text-center max-w-2xl mx-auto mb-16 px-4 text-balance">

@@ -124,9 +124,27 @@ export function EcommerceShowcase() {
                                             <span className="text-5xl md:text-6xl font-black tracking-tighter text-primary">₹59,999</span>
                                             <span className="text-primary/40 font-bold text-xl">*</span>
                                         </div>
-                                        <div className="flex items-center gap-2 mt-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 w-fit">
-                                            <CheckCircle2 className="w-3 h-3 text-emerald-600" />
-                                            <span className="text-[10px] font-bold text-emerald-700 uppercase tracking-wider">Includes All Premium Services</span>
+                                        <div className="space-y-4 mt-6">
+                                            <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-violet-500/10 border border-violet-500/20 w-fit">
+                                                <CheckCircle2 className="w-3 h-3 text-violet-600" />
+                                                <span className="text-[10px] font-bold text-violet-700 uppercase tracking-wider">Includes All Standard Services</span>
+                                            </div>
+
+                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-2.5">
+                                                {[
+                                                    "6-8 Page Professional Site",
+                                                    "Full Branding Suite",
+                                                    "Google Business Profile",
+                                                    "Social Media Starter Kit",
+                                                    "2 Marketing Banners",
+                                                    "1 Month Priority Support"
+                                                ].map((item, i) => (
+                                                    <div key={i} className="flex items-center gap-2 group/item">
+                                                        <div className="w-1 h-1 rounded-full bg-violet-400 group-hover/item:scale-150 transition-transform" />
+                                                        <span className="text-[10px] font-bold text-muted-foreground uppercase tracking-tight group-hover:text-primary transition-colors whitespace-nowrap">{item}</span>
+                                                    </div>
+                                                ))}
+                                            </div>
                                         </div>
                                     </div>
 

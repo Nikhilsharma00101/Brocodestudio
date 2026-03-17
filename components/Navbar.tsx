@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { motion, AnimatePresence, useScroll, useSpring, useMotionValue, useTransform } from "framer-motion";
 import { Menu, X, ArrowRight, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -238,6 +239,39 @@ export function Navbar() {
 
                 {/* Action Section */}
                 <div className="flex items-center gap-2 md:gap-4">
+                    <SignedOut>
+                        <SignInButton mode="modal">
+                            <motion.button
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                                className="group relative hidden md:flex items-center gap-2 px-6 py-2.5 rounded-full text-slate-900 border border-slate-200 text-sm font-bold transition-all shadow-sm hover:border-cyan-500 hover:text-cyan-700 bg-white"
+                            >
+                                <span className="relative">Client Portal</span>
+                            </motion.button>
+                        </SignInButton>
+                    </SignedOut>
+
+                    <SignedIn>
+                        <Link href="/dashboard" className="hidden md:block">
+                            <motion.button
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                                className="group relative flex items-center gap-2 px-6 py-2.5 rounded-full text-slate-900 border border-slate-200 text-sm font-bold transition-all shadow-sm hover:border-cyan-500 hover:text-cyan-700 bg-white"
+                            >
+                                <span className="relative">Dashboard</span>
+                            </motion.button>
+                        </Link>
+                        <div className="hidden md:flex ml-2 items-center justify-center">
+                            <UserButton
+                                appearance={{
+                                    elements: {
+                                        userButtonAvatarBox: "w-9 h-9 border-2 border-slate-200"
+                                    }
+                                }}
+                            />
+                        </div>
+                    </SignedIn>
+
                     <Link href="/contact" className="hidden md:block">
                         <motion.button
                             whileHover={{ scale: 1.02 }}
@@ -340,12 +374,21 @@ export function Navbar() {
                             </Link>
 
                             <div className="flex justify-between items-end border-t border-slate-800 pt-6">
-                                <div className="flex flex-col text-xs text-slate-500 font-mono">
-                                    <span>BroCode Studio</span>
-                                    <span>© 2026</span>
+                                <div className="flex flex-col text-xs text-slate-500 font-mono gap-1">
+                                    <SignedOut>
+                                        <SignInButton mode="modal">
+                                            <span className="text-cyan-500 underline cursor-pointer hover:text-cyan-400">Client Login</span>
+                                        </SignInButton>
+                                    </SignedOut>
+                                    <SignedIn>
+                                        <Link href="/dashboard" className="text-cyan-500 underline hover:text-cyan-400">View Client Portal</Link>
+                                    </SignedIn>
+                                    <span className="mt-2">BroCode Studio © 2026</span>
                                 </div>
                                 <div className="flex gap-4">
-                                    {/* Social Placeholders or other small links could go here */}
+                                    <SignedIn>
+                                        <UserButton appearance={{ elements: { userButtonAvatarBox: "w-8 h-8" } }} />
+                                    </SignedIn>
                                 </div>
                             </div>
                         </motion.div>

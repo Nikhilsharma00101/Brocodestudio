@@ -118,33 +118,37 @@ export const metadata: Metadata = {
 
 
 
+import { ClerkProvider } from '@clerk/nextjs'
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body
-        className={cn(
-          "min-h-screen bg-background font-sans antialiased text-foreground flex flex-col",
-          inter.variable,
-          plusJakarta.variable,
-          outfit.variable,
-          syne.variable
-        )}
-      >
-        <JsonLd />
-        <ScrollToTop />
-        <Navbar />
-        <main className="flex-grow pt-20">
-          {children}
-        </main>
-        <Footer />
-        <Suspense fallback={null}>
-          <SmoothScroll />
-        </Suspense>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en" className="scroll-smooth">
+        <body
+          className={cn(
+            "min-h-screen bg-background font-sans antialiased text-foreground flex flex-col",
+            inter.variable,
+            plusJakarta.variable,
+            outfit.variable,
+            syne.variable
+          )}
+        >
+          <JsonLd />
+          <ScrollToTop />
+          <Navbar />
+          <main className="flex-grow pt-20">
+            {children}
+          </main>
+          <Footer />
+          <Suspense fallback={null}>
+            <SmoothScroll />
+          </Suspense>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
