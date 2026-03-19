@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft, Monitor, RotateCcw, CheckCircle2, Clock, ExternalLink, ChevronRight } from "lucide-react";
 import { ReviewActionPanel } from "@/components/dashboard/ReviewActionPanel";
+import type { DemoAsset, Revision } from "@prisma/client";
 
 function formatDate(date: Date | string) {
     return new Date(date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
@@ -137,7 +138,7 @@ export default async function ReviewPage({ params }: { params: Promise<{ id: str
                                 Feature Screenshots ({project.demoScreenshots.length})
                             </div>
                             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                                {project.demoScreenshots.map((shot) => (
+                                {project.demoScreenshots.map((shot: DemoAsset) => (
                                     <a
                                         key={shot.id}
                                         href={shot.url}
@@ -170,7 +171,7 @@ export default async function ReviewPage({ params }: { params: Promise<{ id: str
                                 Your Previous Revision Requests
                             </div>
                             <div className="space-y-3">
-                                {project.revisions.map((rev) => (
+                                {project.revisions.map((rev: Revision) => (
                                     <div
                                         key={rev.id}
                                         className={`p-4 rounded-xl border flex items-start gap-3

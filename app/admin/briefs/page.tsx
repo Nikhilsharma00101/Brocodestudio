@@ -2,6 +2,7 @@ import { getBriefs } from "@/app/actions/brief";
 import { BriefStatusBadge } from "@/components/admin/BriefStatusBadge";
 import { FileText, Clock, User, Calendar, ArrowRight, Inbox } from "lucide-react";
 import Link from "next/link";
+import type { ProjectBrief } from "@prisma/client";
 
 const PROJECT_TYPE_LABELS: Record<string, string> = {
     LANDING_PAGE: "Landing Page",
@@ -31,9 +32,9 @@ function formatDate(date: Date | string) {
 export default async function BriefsPage() {
     const { briefs } = await getBriefs();
 
-    const pending = briefs?.filter((b) => b.status === "PENDING") ?? [];
-    const accepted = briefs?.filter((b) => b.status === "ACCEPTED") ?? [];
-    const rejected = briefs?.filter((b) => b.status === "REJECTED") ?? [];
+    const pending = briefs?.filter((b: ProjectBrief) => b.status === "PENDING") ?? [];
+    const accepted = briefs?.filter((b: ProjectBrief) => b.status === "ACCEPTED") ?? [];
+    const rejected = briefs?.filter((b: ProjectBrief) => b.status === "REJECTED") ?? [];
 
     return (
         <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-1000 mt-8">
@@ -70,7 +71,7 @@ export default async function BriefsPage() {
                 </div>
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
-                    {briefs.map((brief) => (
+                    {briefs.map((brief: ProjectBrief) => (
                         <Link
                             key={brief.id}
                             href={`/admin/briefs/${brief.id}`}

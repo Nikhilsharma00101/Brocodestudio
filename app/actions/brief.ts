@@ -52,7 +52,7 @@ export async function createBrief(input: CreateBriefInput) {
         timeline: input.timeline,
         status: "PENDING",
         referenceAssets: {
-          create: input.assets.map((a) => ({
+          create: input.assets.map((a: BriefAssetInput) => ({
             url: a.url,
             publicId: a.publicId,
             description: a.description?.trim() || "",

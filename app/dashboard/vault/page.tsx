@@ -4,6 +4,7 @@ import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { ChevronLeft, FolderKey, FileText, Image as ImageIcon, Video, Lock, Unlock, CreditCard, CheckCircle2 } from "lucide-react";
 import { DownloadButton } from "@/components/dashboard/DownloadButton";
+import type { Project, Asset } from "@prisma/client";
 
 export default async function VaultPage() {
     const { userId } = await auth();
@@ -70,7 +71,7 @@ export default async function VaultPage() {
                 </div>
             ) : (
                 <div className="space-y-12">
-                    {user.projects.map((project) => {
+                    {user.projects.map((project: Project & { assets: Asset[] }) => {
                         const isUnlocked = project.isUnlocked;
                         const isApproved = project.reviewStatus === "APPROVED";
                         const hasAssets = project.assets.length > 0;
@@ -118,7 +119,7 @@ export default async function VaultPage() {
                                         <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 transition-all duration-500
                                             ${!isUnlocked ? "blur-sm pointer-events-none select-none opacity-60" : ""}`}
                                         >
-                                            {project.assets.map((asset) => (
+                                            {project.assets.map((asset: Asset) => (
                                                 <div key={asset.id} className="group p-6 glass-card rounded-2xl hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between h-full hover:shadow-lg hover:shadow-indigo-500/5">
                                                     <div>
                                                         <div className="flex justify-between items-start mb-6">

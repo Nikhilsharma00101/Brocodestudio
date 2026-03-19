@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
+import type { BriefAsset } from "@prisma/client";
 
 const PROJECT_TYPE_LABELS: Record<string, string> = {
     LANDING_PAGE: "Landing Page",
@@ -70,7 +71,7 @@ export default async function BriefDetailPage({ params }: { params: Promise<{ id
     if (!brief) notFound();
 
     const keyFeaturesList = brief.keyFeatures
-        ? brief.keyFeatures.split("\n").map((f) => f.trim()).filter(Boolean)
+        ? (brief.keyFeatures as string).split("\n").map((f: string) => f.trim()).filter(Boolean)
         : [];
 
     return (
@@ -161,7 +162,7 @@ export default async function BriefDetailPage({ params }: { params: Promise<{ id
                     {keyFeaturesList.length > 0 && (
                         <Section title="Key Features Requested">
                             <ul className="space-y-2">
-                                {keyFeaturesList.map((feature, i) => (
+                                {keyFeaturesList.map((feature: string, i: number) => (
                                     <li key={i} className="flex items-start gap-3 p-3 rounded-xl bg-muted/20 border border-border/40">
                                         <Zap size={14} className="text-accent-foreground shrink-0 mt-0.5" />
                                         <span className="text-sm text-foreground">{feature}</span>
@@ -175,7 +176,7 @@ export default async function BriefDetailPage({ params }: { params: Promise<{ id
                     {brief.referenceAssets && brief.referenceAssets.length > 0 && (
                         <Section title={`Reference Images (${brief.referenceAssets.length})`}>
                             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-                                {brief.referenceAssets.map((asset) => (
+                                {brief.referenceAssets.map((asset: BriefAsset) => (
                                     <div key={asset.id} className="group relative rounded-xl overflow-hidden border border-border/60 aspect-video bg-muted/30">
                                         <Image
                                             src={asset.url}

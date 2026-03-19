@@ -23,7 +23,7 @@ export default async function AdminPage() {
                     <h2 className="text-3xl font-bold font-heading mb-2 tracking-tight text-foreground">Client Roster</h2>
                     <p className="text-muted-foreground text-sm font-medium">Manage global clients and track project execution.</p>
                 </div>
-                <CreateProjectButton clients={clients.map(c => ({ id: c.id, name: c.name, email: c.email }))} />
+                <CreateProjectButton clients={clients.map((c: PrismaUser) => ({ id: c.id, name: c.name, email: c.email }))} />
             </div>
 
             <div className="grid grid-cols-1 gap-8">
