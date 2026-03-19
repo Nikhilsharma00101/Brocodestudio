@@ -4,7 +4,6 @@ import { prisma } from "@/lib/prisma";
 import Link from "next/link";
 import { ChevronLeft, FolderKey, FileText, Image as ImageIcon, Video, Lock, Unlock, CreditCard, CheckCircle2 } from "lucide-react";
 import { DownloadButton } from "@/components/dashboard/DownloadButton";
-import type { Project, Asset } from "@prisma/client";
 
 export default async function VaultPage() {
     const { userId } = await auth();
@@ -29,6 +28,9 @@ export default async function VaultPage() {
     if (!user) {
         redirect("/sign-in");
     }
+
+    type Project = (typeof user.projects)[number];
+    type Asset = Project['assets'][number];
 
     const hasAnyProject = user.projects.length > 0;
 
@@ -71,7 +73,7 @@ export default async function VaultPage() {
                 </div>
             ) : (
                 <div className="space-y-12">
-                    {user.projects.map((project: Project & { assets: Asset[] }) => {
+                    {user.projects.map((project: Project) => {
                         const isUnlocked = project.isUnlocked;
                         const isApproved = project.reviewStatus === "APPROVED";
                         const hasAssets = project.assets.length > 0;

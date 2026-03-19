@@ -1,6 +1,5 @@
 import { User, Activity } from "lucide-react";
 import { prisma } from "@/lib/prisma";
-import type { Project, User as PrismaUser } from "@prisma/client";
 import { CreateProjectButton } from "@/components/admin/CreateProjectButton";
 import Link from "next/link";
 
@@ -15,19 +14,21 @@ export default async function AdminPage() {
         orderBy: { createdAt: 'desc' }
     });
 
+    type ClientWithProjects = (typeof clients)[number];
+    type ProjectType = ClientWithProjects['projects'][number];
+
     return (
         <div className="space-y-10 animate-in fade-in slide-in-from-bottom-4 duration-1000 mt-8">
-
             <div className="flex justify-between items-end bg-card/40 border border-border/50 rounded-2xl p-6 backdrop-blur-sm shadow-sm relative z-20">
                 <div>
                     <h2 className="text-3xl font-bold font-heading mb-2 tracking-tight text-foreground">Client Roster</h2>
                     <p className="text-muted-foreground text-sm font-medium">Manage global clients and track project execution.</p>
                 </div>
-                <CreateProjectButton clients={clients.map((c: PrismaUser) => ({ id: c.id, name: c.name, email: c.email }))} />
+                <CreateProjectButton clients={clients.map((c: ClientWithProjects) => ({ id: c.id, name: c.name, email: c.email }))} />
             </div>
 
             <div className="grid grid-cols-1 gap-8">
-                {clients.map((client: PrismaUser & { projects: Project[] }) => (
+                {clients.map((client: ClientWithProjects) => (
                     <div key={client.id} className="p-8 glass-card rounded-[2rem] hover:ring-1 hover:ring-border/50 transition-all group/client">
                         <div className="flex items-center gap-5 mb-8 pb-6 border-b border-border/60">
                             <div className="w-14 h-14 rounded-2xl bg-gradient-subtle flex items-center justify-center border border-border shadow-sm group-hover/client:shadow-md transition-all">
@@ -53,7 +54,7 @@ export default async function AdminPage() {
                                 </div>
                             ) : (
                                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                                    {client.projects.map((project: Project) => (
+                                    {client.projects.map((project: ProjectType) => (
                                         <div key={project.id} className="p-6 border border-border/80 rounded-[1.5rem] bg-card flex flex-col justify-between hover:bg-muted/40 transition-colors group cursor-pointer shadow-sm hover:shadow-md hover:-translate-y-1 duration-300">
                                             <div className="flex justify-between items-start mb-6">
                                                 <div className="font-bold text-base text-foreground group-hover:text-accent-foreground transition-colors pr-2 leading-tight">{project.title}</div>

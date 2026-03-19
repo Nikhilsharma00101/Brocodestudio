@@ -5,7 +5,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowLeft, Monitor, RotateCcw, CheckCircle2, Clock, ExternalLink, ChevronRight } from "lucide-react";
 import { ReviewActionPanel } from "@/components/dashboard/ReviewActionPanel";
-import type { DemoAsset, Revision } from "@prisma/client";
 
 function formatDate(date: Date | string) {
     return new Date(date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
@@ -29,6 +28,9 @@ export default async function ReviewPage({ params }: { params: Promise<{ id: str
 
     // Security: only the project owner may view this
     if (!project || project.clientId !== user.id) redirect("/dashboard");
+
+    type DemoAsset = NonNullable<typeof project>['demoScreenshots'][number];
+    type Revision = NonNullable<typeof project>['revisions'][number];
 
     // If no demo URL has been set yet, redirect back to timeline
     if (!project.demoUrl) redirect(`/dashboard/project/${id}`);

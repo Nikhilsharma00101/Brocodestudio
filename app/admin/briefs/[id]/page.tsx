@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import type { BriefAsset } from "@prisma/client";
+type BriefAsset = NonNullable<Awaited<ReturnType<typeof getBriefById>>['brief']>['referenceAssets'][number];
 
 const PROJECT_TYPE_LABELS: Record<string, string> = {
     LANDING_PAGE: "Landing Page",
