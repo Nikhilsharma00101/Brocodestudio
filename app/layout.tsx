@@ -119,6 +119,7 @@ export const metadata: Metadata = {
 
 
 import { ClerkProvider } from '@clerk/nextjs'
+import ChatWidget from "@/components/AI/ChatWidget";
 
 export default function RootLayout({
   children,
@@ -144,6 +145,7 @@ export default function RootLayout({
             {children}
           </main>
           <Footer />
+          <ChatWidget />
           <Suspense fallback={null}>
             <SmoothScroll />
           </Suspense>

@@ -35,7 +35,7 @@ export async function PATCH(
 
         return NextResponse.json({ success: true, project: updatedProject });
 
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error("Update API Error:", error);
         return NextResponse.json(
             { error: "Failed to update project." },

@@ -1,4 +1,4 @@
-import { User, Activity, CheckCircle2 } from "lucide-react";
+import { User, Activity } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import type { Project, User as PrismaUser } from "@prisma/client";
 import { CreateProjectButton } from "@/components/admin/CreateProjectButton";

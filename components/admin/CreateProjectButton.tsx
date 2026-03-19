@@ -80,8 +80,8 @@ export function CreateProjectButton({ clients }: CreateProjectButtonProps) {
             setTitle("");
             setClientId("");
             router.refresh(); // Refresh page to show new project
-        } catch (err: any) {
-            setError(err.message);
+        } catch (err: unknown) {
+            setError(err instanceof Error ? err.message : String(err));
         } finally {
             setLoading(false);
         }
@@ -162,7 +162,7 @@ export function CreateProjectButton({ clients }: CreateProjectButtonProps) {
                                     <div className="absolute z-[100] w-full mt-2 bg-card border border-border rounded-xl shadow-xl overflow-hidden max-h-64 overflow-y-auto custom-scrollbar">
                                         {filteredClients.length === 0 ? (
                                             <div className="p-5 text-center text-sm text-muted-foreground font-medium">
-                                                No clients found matching "{searchQuery}"
+                                                No clients found matching &quot;{searchQuery}&quot;
                                             </div>
                                         ) : (
                                             <ul className="py-2" role="listbox">

@@ -2,6 +2,7 @@ import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import { UserButton } from "@clerk/nextjs";
 import { prisma } from "@/lib/prisma";
+import Link from "next/link";
 
 export default async function AdminLayout({
     children,
@@ -42,9 +43,15 @@ export default async function AdminLayout({
                             Admin Control Panel
                         </p>
                     </div>
-                    <div className="flex items-center gap-6">
-                        <a href="/dashboard" className="hidden md:flex items-center gap-2 px-5 py-2.5 rounded-xl text-muted-foreground hover:bg-muted hover:text-foreground transition-all text-sm font-semibold border border-transparent hover:border-border">
-                            Back to Client Portal
+                    <div className="flex items-center gap-4">
+                        <Link href="/admin/briefs" className="hidden md:flex items-center gap-2 px-4 py-2 rounded-xl text-muted-foreground hover:bg-accent/10 hover:text-accent-foreground transition-all text-sm font-semibold border border-transparent hover:border-accent/30">
+                            Incoming Briefs
+                        </Link>
+                        <Link href="/admin" className="hidden md:flex items-center gap-2 px-4 py-2 rounded-xl text-muted-foreground hover:bg-muted hover:text-foreground transition-all text-sm font-semibold border border-transparent hover:border-border">
+                            Client Roster
+                        </Link>
+                        <a href="/dashboard" className="hidden md:flex items-center gap-2 px-4 py-2 rounded-xl text-muted-foreground hover:bg-muted hover:text-foreground transition-all text-sm font-semibold border border-transparent hover:border-border">
+                            Client Portal
                         </a>
                         <div className="px-4 py-1.5 rounded-full bg-accent/20 border border-accent/30 text-accent-foreground text-sm font-bold tracking-widest hidden md:block shadow-sm">
                             ADMIN

@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { Button } from "@/components/ui/Button";
 import { WorkBackground } from "@/components/work/WorkBackground";
 import { ArrowUpRight, Eye, Layers, Zap } from "lucide-react";
@@ -125,6 +125,12 @@ const CinematicProject = ({ project, index }: { project: Project, index: number 
 };
 
 export default function WorkClient() {
+    const [mounted, setMounted] = useState(false);
+    useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setMounted(true);
+    }, []);
+
     const [particles] = useState(() => Array.from({ length: 5 }).map((_, i) => ({
         x: Math.random() * 100 - 50,
         duration: 1 + Math.random(),
@@ -252,7 +258,7 @@ export default function WorkClient() {
 
                                 {/* Extra Visual: Floating Particles */}
                                 <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                                    {particles.map((p, i) => (
+                                    {mounted && particles.map((p, i) => (
                                         <motion.div
                                             key={i}
                                             className="absolute w-1 h-1 bg-white rounded-full"

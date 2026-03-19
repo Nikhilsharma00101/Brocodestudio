@@ -8,7 +8,7 @@ export const maxDuration = 60; // Set max duration for API route (Vercel specifi
 
 export async function POST(req: NextRequest) {
     try {
-        const { userId, sessionClaims } = await auth();
+        const { userId } = await auth();
 
         // Basic Security Check: Verify user is admin
         // In production, you would check sessionClaims or DB for actual role
@@ -25,7 +25,7 @@ export async function POST(req: NextRequest) {
         }
 
         const body = await req.json();
-        const { file, fileName, projectId, assetName } = body;
+        const { file, projectId, assetName } = body;
 
         if (!file || !projectId || !assetName) {
             return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
@@ -51,10 +51,10 @@ export async function POST(req: NextRequest) {
 
         return NextResponse.json({ success: true, asset });
 
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error("Upload API Error:", error);
         return NextResponse.json(
-            { error: error.message || "Failed to process upload." },
+            { error: error instanceof Error ? error.message : "Failed to process upload." },
             { status: 500 }
         );
     }

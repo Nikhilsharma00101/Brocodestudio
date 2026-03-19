@@ -11,6 +11,11 @@ import {
     Rocket,
     CheckCircle2,
     Circle,
+    Monitor,
+    RotateCcw,
+    Clock,
+    ChevronRight,
+    Sparkles,
 } from "lucide-react";
 
 const PHASES = [
@@ -28,6 +33,12 @@ function getPhaseStatus(phaseKey: string, currentStatus: string) {
     if (phaseIndex === currentIndex) return "current";
     return "upcoming";
 }
+
+const REVIEW_STATUS_CONFIG: Record<string, { icon: React.ElementType; label: string; color: string; bg: string; border: string }> = {
+    PENDING_REVIEW: { icon: Clock, label: "Review Pending", color: "text-amber-700", bg: "bg-amber-50", border: "border-amber-200" },
+    CHANGES_REQUESTED: { icon: RotateCcw, label: "Revision In Progress", color: "text-orange-700", bg: "bg-orange-50", border: "border-orange-200" },
+    APPROVED: { icon: CheckCircle2, label: "Approved ✓", color: "text-emerald-700", bg: "bg-emerald-50", border: "border-emerald-200" },
+};
 
 export default async function ProjectTimelinePage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
@@ -47,12 +58,16 @@ export default async function ProjectTimelinePage({ params }: { params: Promise<
 
     const project = await prisma.project.findUnique({
         where: { id },
-        include: { assets: true },
+        include: {
+            assets: true,
+            demoScreenshots: { select: { id: true } },
+        },
     });
 
     if (!project || project.clientId !== user.id) {
         redirect("/dashboard");
     }
+
 
     const currentPhaseIndex = PHASES.findIndex((p) => p.key === project.status);
 
@@ -82,6 +97,50 @@ export default async function ProjectTimelinePage({ params }: { params: Promise<
                     </div>
                 </div>
             </div>
+
+            {/* ── Demo Ready Banner ─────────────────────────── */}
+            {project.demoUrl && (() => {
+                const reviewCfg = REVIEW_STATUS_CONFIG[project.reviewStatus] ?? REVIEW_STATUS_CONFIG.PENDING_REVIEW;
+                // const ReviewIcon = reviewCfg.icon; // Removed unused variable
+                return (
+                    <div className={`p-5 rounded-2xl border ${reviewCfg.bg} ${reviewCfg.border} flex flex-col sm:flex-row sm:items-center gap-4`}>
+                        <div className="flex items-start gap-3 flex-1">
+                            <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 border ${reviewCfg.bg} ${reviewCfg.border}`}>
+                                {project.reviewStatus === "APPROVED"
+                                    ? <CheckCircle2 size={20} className="text-emerald-600" />
+                                    : <Sparkles size={20} className="text-indigo-500" />}
+                            </div>
+                            <div>
+                                <p className={`text-sm font-bold ${reviewCfg.color}`}>
+                                    {project.reviewStatus === "APPROVED"
+                                        ? "You approved this demo!"
+                                        : project.reviewStatus === "CHANGES_REQUESTED"
+                                            ? "Revision submitted — we're working on it"
+                                            : "Your demo is ready for review!"}
+                                </p>
+                                <p className="text-slate-500 text-xs mt-0.5 leading-relaxed">
+                                    {project.reviewStatus === "APPROVED"
+                                        ? "Head to the Vault to complete your payment and unlock final assets."
+                                        : project.reviewStatus === "CHANGES_REQUESTED"
+                                            ? "We received your feedback. Check back soon for an updated preview."
+                                            : `${project.demoScreenshots?.length ?? 0} screenshots to explore. Enter the Review Room to preview and respond.`}
+                                </p>
+                            </div>
+                        </div>
+                        <Link
+                            href={`/dashboard/project/${project.id}/review`}
+                            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl font-bold text-sm whitespace-nowrap transition-all hover:-translate-y-0.5 shrink-0
+                                ${project.reviewStatus === "APPROVED"
+                                    ? "bg-emerald-600 hover:bg-emerald-500 text-white shadow-md shadow-emerald-500/20"
+                                    : "bg-slate-900 hover:bg-indigo-600 text-white shadow-md hover:shadow-indigo-500/20"}`}
+                        >
+                            <Monitor size={14} />
+                            {project.reviewStatus === "APPROVED" ? "View Review" : "Enter Review Room"}
+                            <ChevronRight size={14} />
+                        </Link>
+                    </div>
+                );
+            })()}
 
             {/* Overall Progress */}
             <div className="p-6 md:p-8 rounded-2xl glass-card">

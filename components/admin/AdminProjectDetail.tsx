@@ -1,12 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { ChevronLeft, Save, ChevronDown, Check, LayoutDashboard, PenTool, Code2, SearchCheck, CheckCircle2 } from "lucide-react";
+import { ChevronLeft, Save, ChevronDown, Check, LayoutDashboard, PenTool, Code2, SearchCheck, CheckCircle2, MessageSquare, Clock, AlertCircle } from "lucide-react";
 import Link from "next/link";
 import { FileUploader } from "@/components/admin/FileUploader";
+import { DemoPanel } from "@/components/admin/DemoPanel";
 
-export default function AdminProjectDetail({ params, project, assets }: any) {
+export default function AdminProjectDetail({ project, assets }: { project: any; assets: any[] }) {
     const router = useRouter();
     const [progress, setProgress] = useState(project.progress);
     const [status, setStatus] = useState(project.status);
@@ -25,6 +27,7 @@ export default function AdminProjectDetail({ params, project, assets }: any) {
         };
         document.addEventListener("mousedown", handleClickOutside);
 
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setMounted(true);
 
         return () => document.removeEventListener("mousedown", handleClickOutside);
@@ -74,7 +77,10 @@ export default function AdminProjectDetail({ params, project, assets }: any) {
             <div className="flex justify-between items-end border-b border-border/60 pb-8">
                 <div>
                     <h2 className="text-4xl font-bold font-brand tracking-tight text-foreground">{project.title}</h2>
-                    <p className="text-muted-foreground text-sm mt-2 font-medium">Client ID: <span className="font-mono bg-muted px-2 py-1 rounded-md text-xs border border-border">{project.clientId.split('-')[0]}</span></p>
+                    <p className="text-muted-foreground text-sm mt-2 font-medium">Client: <span className="font-semibold text-foreground">{project.client?.name ?? project.clientId.split('-')[0]}</span>
+                        <span className="mx-2 text-border">·</span>
+                        <span className="font-mono bg-muted px-2 py-0.5 rounded-md text-xs border border-border">{project.client?.email ?? ""}</span>
+                    </p>
                 </div>
                 <button
                     onClick={handleSave}
@@ -164,8 +170,18 @@ export default function AdminProjectDetail({ params, project, assets }: any) {
                     <FileUploader projectId={project.id} onUploadSuccess={handleUploadSuccess} />
                 </div>
 
+                {/* Middle Col: Demo Panel */}
+                <div className="lg:col-span-1">
+                    <DemoPanel
+                        projectId={project.id}
+                        demoUrl={project.demoUrl ?? null}
+                        demoScreenshots={project.demoScreenshots ?? []}
+                        reviewStatus={project.reviewStatus}
+                    />
+                </div>
+
                 {/* Right Col: Vault Preview */}
-                <div className="lg:col-span-2">
+                <div className="lg:col-span-1">
                     <div className="p-8 glass-card rounded-[2rem] h-full flex flex-col">
                         <h3 className="text-sm font-bold uppercase tracking-widest text-muted-foreground mb-6 flex items-center gap-2">
                             <span className="w-1.5 h-1.5 rounded-full bg-purple-500" />
@@ -206,6 +222,47 @@ export default function AdminProjectDetail({ params, project, assets }: any) {
                     </div>
                 </div>
             </div>
+
+            {/* ── Revision History ─────────────────────────── */}
+            {project.revisions && project.revisions.length > 0 && (
+                <div className="p-8 glass-card rounded-[2rem]">
+                    <h3 className="text-sm font-bold uppercase tracking-widest text-muted-foreground mb-6 flex items-center gap-2">
+                        <MessageSquare size={14} className="text-orange-400" />
+                        Client Revision Requests ({project.revisions.length})
+                    </h3>
+                    <div className="space-y-3">
+                        {project.revisions.map((rev: any) => (
+                            <div key={rev.id} className={`p-5 rounded-2xl border flex gap-4 items-start
+                                ${rev.status === 'OPEN'
+                                    ? 'border-orange-500/30 bg-orange-500/5'
+                                    : 'border-border/50 bg-muted/20'}`}
+                            >
+                                <div className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 mt-0.5
+                                    ${rev.status === 'OPEN' ? 'bg-orange-500/20' : 'bg-muted'}`}
+                                >
+                                    {rev.status === 'OPEN'
+                                        ? <AlertCircle size={13} className="text-orange-400" />
+                                        : <CheckCircle2 size={13} className="text-emerald-400" />}
+                                </div>
+                                <div className="flex-1">
+                                    <p className="text-sm text-foreground leading-relaxed">{rev.feedback}</p>
+                                    <div className="flex items-center gap-3 mt-2 text-xs text-muted-foreground">
+                                        <span className="flex items-center gap-1">
+                                            <Clock size={10} />
+                                            {mounted ? new Date(rev.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : '...'}
+                                        </span>
+                                        <span className={`font-bold uppercase tracking-widest text-[9px] px-2 py-0.5 rounded-full
+                                            ${rev.status === 'OPEN' ? 'bg-orange-500/10 text-orange-400' : 'bg-emerald-500/10 text-emerald-400'}`}
+                                        >
+                                            {rev.status}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

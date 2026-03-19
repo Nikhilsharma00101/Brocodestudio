@@ -39,9 +39,10 @@ export function useUpload() {
             const data = await response.json();
             setIsUploading(false);
             return data.asset;
-        } catch (err: any) {
+        } catch (err) {
             console.error(err);
-            setError(err.message || 'An error occurred during upload');
+            const errorMessage = err instanceof Error ? err.message : 'An error occurred during upload';
+            setError(errorMessage);
             setIsUploading(false);
             throw err;
         }

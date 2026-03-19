@@ -19,12 +19,24 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
         redirect("/dashboard");
     }
 
-    // Fetch the project and its assets
+    // Fetch the project and ALL phase 4 related data
     const project = await prisma.project.findUnique({
         where: { id },
         include: {
             assets: {
                 orderBy: { createdAt: 'desc' }
+            },
+            demoScreenshots: {
+                orderBy: { createdAt: 'desc' }
+            },
+            revisions: {
+                orderBy: { createdAt: 'desc' }
+            },
+            brief: {
+                select: { id: true, name: true, email: true, quotedPrice: true }
+            },
+            client: {
+                select: { id: true, name: true, email: true }
             }
         }
     });
@@ -39,3 +51,4 @@ export default async function ProjectPage({ params }: { params: Promise<{ id: st
 
     return <AdminProjectDetail project={project} assets={project.assets} />;
 }
+

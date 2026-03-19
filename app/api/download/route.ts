@@ -34,7 +34,7 @@ function extractFirstFileFromZip(zipBuffer: Buffer): Buffer {
 
     const compressionMethod = zipBuffer.readUInt16LE(cdOffset + 10);
     const compressedSize = zipBuffer.readUInt32LE(cdOffset + 20);
-    const fileNameLength = zipBuffer.readUInt16LE(cdOffset + 28);
+    zipBuffer.readUInt16LE(cdOffset + 28); // Read but ignore
     const localHeaderOffset = zipBuffer.readUInt32LE(cdOffset + 42);
 
     // Now read the local file header to find where data starts
@@ -149,7 +149,7 @@ export async function GET(req: NextRequest) {
 
             const zipDownloadUrl = cloudinary.utils.download_zip_url({
                 public_ids: [cloudinaryInfo.publicId],
-                resource_type: cloudinaryInfo.resourceType as any,
+                resource_type: cloudinaryInfo.resourceType as "image" | "video" | "raw" | "auto",
                 flatten_folders: true,
             });
 
@@ -223,9 +223,10 @@ export async function GET(req: NextRequest) {
             },
         });
 
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error("[PROXY_DOWNLOAD_ERROR]", error);
-        return new NextResponse(`Download failed: ${error.message}`, { status: 500 });
+        const errorMessage = error instanceof Error ? error.message : "Internal Server Error";
+        return new NextResponse(`Download failed: ${errorMessage}`, { status: 500 });
     }
 }
 

@@ -272,6 +272,17 @@ export function Navbar() {
                         </div>
                     </SignedIn>
 
+                    <Link href="/start-project" className="hidden md:block">
+                        <motion.button
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            className="group relative flex items-center gap-2 px-5 py-2.5 rounded-full bg-gradient-to-r from-cyan-500 to-violet-600 text-white text-sm font-bold overflow-hidden transition-all shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40"
+                        >
+                            <Sparkles className="w-4 h-4" />
+                            <span>Start a Project</span>
+                        </motion.button>
+                    </Link>
+
                     <Link href="/contact" className="hidden md:block">
                         <motion.button
                             whileHover={{ scale: 1.02 }}
@@ -366,6 +377,12 @@ export function Navbar() {
                             transition={{ delay: 0.6 }}
                             className="relative z-10 space-y-6"
                         >
+                            <Link href="/start-project" onClick={() => setIsMobileMenuOpen(false)} className="block">
+                                <Button variant="gradient" size="lg" className="w-full text-lg font-bold py-6 group">
+                                    <Sparkles className="w-5 h-5 mr-2" />
+                                    <span>Start a Project</span>
+                                </Button>
+                            </Link>
                             <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)} className="block">
                                 <Button variant="gradient" size="lg" className="w-full text-lg font-bold py-6 group">
                                     <span className="mr-2">Initiate Contact</span>

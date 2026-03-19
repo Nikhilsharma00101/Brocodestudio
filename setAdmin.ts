@@ -17,8 +17,9 @@ async function main() {
             data: { role: 'admin' },
         })
         console.log(`Success! Updated user ${user.email} with the 'admin' role.`);
-    } catch (error: any) {
-        if (error.code === 'P2025') {
+    } catch (error: unknown) {
+        const err = error as { code?: string };
+        if (err.code === 'P2025') {
             console.error(`User with email '${emailToUpdate}' not found in the database.`);
         } else {
             console.error("An error occurred:", error);

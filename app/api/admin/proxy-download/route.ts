@@ -38,8 +38,9 @@ export async function GET(req: NextRequest) {
             },
         });
 
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error("[PROXY_DOWNLOAD_ERROR]", error);
-        return new NextResponse(`Download failed: ${error.message}`, { status: 500 });
+        const errorMessage = error instanceof Error ? error.message : "Internal Server Error";
+        return new NextResponse(`Download failed: ${errorMessage}`, { status: 500 });
     }
 }

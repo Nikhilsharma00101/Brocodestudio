@@ -33,9 +33,12 @@ const MemoizedMarker = ({ index }: { index: number }) => {
 };
 
 export const WorkBackground = () => {
+    const [mounted, setMounted] = useState(false);
     const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
     useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setMounted(true);
         const handleMouseMove = (e: MouseEvent) => {
             setMousePosition({
                 x: (e.clientX / window.innerWidth - 0.5) * 20,
@@ -128,7 +131,7 @@ export const WorkBackground = () => {
 
             {/* Floating Technical Markers */}
             <div className="absolute inset-0">
-                {[...Array(10)].map((_, i) => (
+                {mounted && [...Array(10)].map((_, i) => (
                     <MemoizedMarker key={i} index={i} />
                 ))}
             </div>

@@ -224,6 +224,15 @@ body {
   .animate-scan-vertical {
     animation: scan-vertical 4s linear infinite;
   }
+
+  /* Utility to hide scrollbars while keeping scroll functionality */
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-none {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
 }
 
 html.lenis,

@@ -9,35 +9,144 @@ datasource db {
   provider = "postgresql"
 }
 
+// ─────────────────────────────────────────────
+// USER
+// ─────────────────────────────────────────────
 model User {
-  id        String    @id @default(uuid())
-  clerkId   String    @unique
-  email     String    @unique
+  id        String         @id @default(uuid())
+  clerkId   String         @unique
+  email     String         @unique
   name      String?
-  role      String    @default("client") // 'client' or 'admin'
+  role      String         @default("client") // 'client' or 'admin'
   projects  Project[]
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  briefs    ProjectBrief[]
+  createdAt DateTime       @default(now())
+  updatedAt DateTime       @updatedAt
 }
 
+// ─────────────────────────────────────────────
+// PROJECT BRIEF  (submitted by visitor / client)
+// ─────────────────────────────────────────────
+model ProjectBrief {
+  id           String       @id @default(uuid())
+  name         String
+  email        String
+  projectType  String       // LANDING_PAGE | FULL_STACK | UI_DESIGN | ECOMMERCE | OTHER
+  description  String       @db.Text
+  targetAudience String?
+  keyFeatures  String?      @db.Text  // stored as newline-separated list
+  budgetRange  String       // e.g. "$500-$1000"
+  timeline     String       // e.g. "1 month"
+  status       String       @default("PENDING") // PENDING | ACCEPTED | REJECTED
+  quotedPrice  Float?       // Admin fills this when accepting
+  adminNotes   String?      @db.Text
+  referenceAssets BriefAsset[]
+  project      Project?     // Created by admin upon acceptance
+  userId       String?      // Linked after Clerk account created
+  user         User?        @relation(fields: [userId], references: [id])
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+}
+
+// ─────────────────────────────────────────────
+// BRIEF ASSET  (reference images uploaded in wizard)
+// ─────────────────────────────────────────────
+model BriefAsset {
+  id          String       @id @default(uuid())
+  url         String
+  publicId    String       // Cloudinary public_id
+  description String?      @db.Text
+  briefId     String
+  brief       ProjectBrief @relation(fields: [briefId], references: [id], onDelete: Cascade)
+  createdAt   DateTime     @default(now())
+}
+
+// ─────────────────────────────────────────────
+// PROJECT  (created by admin, linked to a brief)
+// ─────────────────────────────────────────────
 model Project {
-  id          String   @id @default(uuid())
-  title       String
-  status      String   @default("Planning") // Planning, Design, Development, Review, Completed
-  progress    Int      @default(0) // 0-100 percentage
-  clientId    String
-  client      User     @relation(fields: [clientId], references: [id])
-  assets      Asset[]
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id                  String      @id @default(uuid())
+  title               String
+  description         String?     @db.Text
+  status              String      @default("Planning") // Planning | Design | Development | Review | Completed
+  progress            Int         @default(0)           // 0–100 percentage
+
+  // Client relationship
+  clientId            String
+  client              User        @relation(fields: [clientId], references: [id])
+
+  // Origin brief
+  briefId             String?     @unique
+  brief               ProjectBrief? @relation(fields: [briefId], references: [id])
+
+  // Demo / Review
+  demoUrl             String?     // Staging or preview URL
+  demoScreenshots     DemoAsset[]
+  reviewStatus        String      @default("PENDING_REVIEW") // PENDING_REVIEW | CHANGES_REQUESTED | APPROVED
+  clientFeedback      String?     @db.Text
+  revisions           Revision[]
+
+  // Payment / Delivery
+  paymentStatus       String      @default("UNPAID")  // UNPAID | PAID
+  stripeSessionId     String?     @unique
+  stripePaymentId     String?
+  stripePaymentAmount Float?
+  isUnlocked          Boolean     @default(false)
+  deliveryNote        String?     @db.Text
+
+  // Final deliverable assets (locked until payment)
+  assets              Asset[]
+
+  createdAt           DateTime    @default(now())
+  updatedAt           DateTime    @updatedAt
 }
 
+// ─────────────────────────────────────────────
+// DEMO ASSET  (screenshots/previews uploaded by admin)
+// ─────────────────────────────────────────────
+model DemoAsset {
+  id        String   @id @default(uuid())
+  url       String
+  publicId  String   // Cloudinary public_id
+  caption   String?
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}
+
+// ─────────────────────────────────────────────
+// ASSET  (final deliverable files — locked until payment)
+// ─────────────────────────────────────────────
 model Asset {
   id        String   @id @default(uuid())
   name      String
   url       String
-  type      String   @default("IMAGE") // IMAGE, PDF, VIDEO, etc
+  publicId  String?  // Cloudinary public_id
+  type      String   @default("IMAGE") // IMAGE | PDF | VIDEO | ZIP | OTHER
+  size      Int?     // file size in bytes
   projectId String
   project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
+}
+
+// ─────────────────────────────────────────────
+// REVISION  (client revision requests, full history)
+// ─────────────────────────────────────────────
+model Revision {
+  id        String   @id @default(uuid())
+  feedback  String   @db.Text
+  status    String   @default("OPEN") // OPEN | RESOLVED
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ─────────────────────────────────────────────
+// NEWSLETTER SUBSCRIBER
+// ─────────────────────────────────────────────
+model NewsletterSubscriber {
+  id          String   @id @default(uuid())
+  email       String   @unique
+  subscribedAt DateTime @default(now())
 }
