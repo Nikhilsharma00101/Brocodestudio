@@ -202,7 +202,7 @@ export default async function BriefDetailPage({ params }: { params: Promise<{ id
                                     </div>
                                 ))}
                             </div>
-                            {brief.referenceAssets.every((a) => !a.description) ? null : (
+                            {brief.referenceAssets.every((a: BriefAsset) => !a.description) ? null : (
                                 <p className="text-xs text-muted-foreground mt-2 flex items-center gap-1">
                                     <ImageIcon size={11} />
                                     Hover over images to see the client&apos;s notes.
